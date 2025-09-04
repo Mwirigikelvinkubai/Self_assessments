@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Tabs from "./components/Tabs";
+
+import moneyQuiz from "./assessments/money.json";
+import ptsdQuiz from "./assessments/ptsd.json";
+import depressionQuiz from "./assessments/depression.json";
+import burnoutQuiz from "./assessments/burnout.json";
+
+import "./App.css";
 
 function App() {
+  const assessments = [moneyQuiz, ptsdQuiz, depressionQuiz, burnoutQuiz];
+  const [activeTab, setActiveTab] = useState(0);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Self-Assessment Dashboard</h1>
+      <Tabs
+        tabs={assessments.map((a) => a.name)}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+      />
+
+      <div className="quiz-section">
+        <h2>{assessments[activeTab].name}</h2>
+        <p>Questions for this assessment will load here...</p>
+      </div>
     </div>
   );
 }

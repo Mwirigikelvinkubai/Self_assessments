@@ -1,0 +1,30 @@
+{
+  "name": "Money Personality",
+  "questions": [
+    "I decide how much of my income to save each month based on specific goals or priorities.",
+    "My spending decisions are motivated by comfort, joy, or necessity.",
+    "I find certain aspects of financial management overwhelming or stressful."
+  ],
+  "scoring": {
+    "Saver": [1],
+    "Spender": [2],
+    "Avoider": [3]
+  },
+  "resultMapping": {
+    "Saver": {
+      "description": "Budget-focused and disciplined. Prefers to save for emergencies and long-term goals.",
+      "strengths": "Prepared for the future, minimizes debt.",
+      "blindspots": "Can miss out on present joys due to excessive frugality."
+    },
+    "Spender": {
+      "description": "Enjoys life through spending. Prioritizes comfort and experiences.",
+      "strengths": "Creates memorable experiences, lives in the moment.",
+      "blindspots": "May face financial instability if not careful."
+    },
+    "Avoider": {
+      "description": "Avoids thinking about money. Procrastinates on bills and budgeting.",
+      "strengths": "Less immediate stress about finances.",
+      "blindspots": "Can fall into debt or instability due to neglect."
+    }
+  }
+}

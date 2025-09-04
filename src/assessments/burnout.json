@@ -1,0 +1,30 @@
+{
+  "name": "Burnout Assessment",
+  "questions": [
+    "I feel emotionally drained by my work.",
+    "I feel less effective in my role than I used to.",
+    "I find it hard to relax after work."
+  ],
+  "scoring": {
+    "Low": [1],
+    "Moderate": [2],
+    "High": [3]
+  },
+  "resultMapping": {
+    "Low": {
+      "description": "Minimal signs of burnout.",
+      "strengths": "Good balance between work and rest.",
+      "blindspots": "Might ignore small stressors."
+    },
+    "Moderate": {
+      "description": "Some symptoms of burnout present.",
+      "strengths": "Aware of work-life balance issues.",
+      "blindspots": "Needs proactive stress management."
+    },
+    "High": {
+      "description": "Strong burnout symptoms present.",
+      "strengths": "Recognizes exhaustion.",
+      "blindspots": "May need immediate rest or professional help."
+    }
+  }
+}

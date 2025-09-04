@@ -1,0 +1,30 @@
+{
+  "name": "PTSD Assessment",
+  "questions": [
+    "I experience unwanted memories or flashbacks of traumatic events.",
+    "I avoid people, places, or activities that remind me of a traumatic experience.",
+    "I feel constantly on guard, watchful, or easily startled."
+  ],
+  "scoring": {
+    "Low Risk": [1],
+    "Moderate Risk": [2],
+    "High Risk": [3]
+  },
+  "resultMapping": {
+    "Low Risk": {
+      "description": "Few PTSD symptoms reported.",
+      "strengths": "Good resilience and coping strategies.",
+      "blindspots": "May underestimate minor symptoms."
+    },
+    "Moderate Risk": {
+      "description": "Some PTSD symptoms present.",
+      "strengths": "Managing but may need support.",
+      "blindspots": "Symptoms could worsen without care."
+    },
+    "High Risk": {
+      "description": "Frequent or severe PTSD symptoms.",
+      "strengths": "Awareness of impact on life.",
+      "blindspots": "May require professional intervention."
+    }
+  }
+}

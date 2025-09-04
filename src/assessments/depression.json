@@ -1,0 +1,30 @@
+{
+  "name": "Depression Screening",
+  "questions": [
+    "I feel little interest or pleasure in doing things.",
+    "I feel down, depressed, or hopeless.",
+    "I have trouble concentrating on tasks."
+  ],
+  "scoring": {
+    "Mild": [1],
+    "Moderate": [2],
+    "Severe": [3]
+  },
+  "resultMapping": {
+    "Mild": {
+      "description": "Occasional depressive feelings.",
+      "strengths": "Able to function with few issues.",
+      "blindspots": "May ignore early warning signs."
+    },
+    "Moderate": {
+      "description": "Persistent depressive symptoms.",
+      "strengths": "Recognizes emotional state.",
+      "blindspots": "Symptoms may affect daily life."
+    },
+    "Severe": {
+      "description": "Intense depressive symptoms impacting daily function.",
+      "strengths": "Awareness of struggles.",
+      "blindspots": "Needs strong support or professional care."
+    }
+  }
+}
