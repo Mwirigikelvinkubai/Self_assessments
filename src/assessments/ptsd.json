@@ -1,30 +1,70 @@
 {
-  "name": "PTSD Assessment",
   "questions": [
-    "I experience unwanted memories or flashbacks of traumatic events.",
-    "I avoid people, places, or activities that remind me of a traumatic experience.",
-    "I feel constantly on guard, watchful, or easily startled."
+    "Repeated, disturbing memories, thoughts, or images of a stressful experience from the past?",
+    "Repeated, disturbing dreams of a stressful experience from the past?",
+    "Suddenly feeling or acting as if the stressful experience were actually happening again (as if you were reliving it)?",
+    "Feeling very upset when something reminded you of the stressful experience?",
+    "Having strong physical reactions when something reminded you of the stressful experience (for example, heart pounding, trouble breathing, or sweating)?",
+    "Avoiding memories, thoughts, or feelings related to the stressful experience?",
+    "Avoiding external reminders of the stressful experience (for example, people, places, conversations, activities, objects, or situations)?",
+    "Trouble remembering important parts of the stressful experience?",
+    "Having strong negative beliefs about yourself, other people, or the world (for example, having thoughts such as: I am bad, there is something seriously wrong with me, no one can be trusted, the world is completely dangerous)?",
+    "Blaming yourself or someone else for the stressful experience or what happened after it?",
+    "Having strong negative feelings such as fear, horror, anger, guilt, or shame?",
+    "Loss of interest in activities you used to enjoy?",
+    "Feeling distant or cut off from other people?",
+    "Trouble experiencing positive feelings (for example, being unable to feel happiness or loving feelings for people close to you)?",
+    "Irritable behavior, angry outbursts, or acting aggressively?",
+    "Taking too many risks or doing things that could cause you harm?",
+    "Being ‘superalert’ or watchful or on guard?",
+    "Feeling jumpy or easily startled?",
+    "Having difficulty concentrating?",
+    "Trouble falling or staying asleep?"
   ],
   "scoring": {
-    "Low Risk": [1],
-    "Moderate Risk": [2],
-    "High Risk": [3]
+    "method": "sum_all",
+    "min_total": 0,
+    "max_total": 80,
+    "thresholds": {
+      "Minimal or None": { "min": 0, "max": 20 },
+      "Mild": { "min": 21, "max": 33 },
+      "Moderate": { "min": 34, "max": 45 },
+      "Severe": { "min": 46, "max": 60 },
+      "Very Severe": { "min": 61, "max": 80 }
+    },
+    "labels": ["Not at all", "A little bit", "Moderately", "Quite a bit", "Extremely"],
+    "values": [0, 1, 2, 3, 4]
   },
-  "resultMapping": {
-    "Low Risk": {
-      "description": "Few PTSD symptoms reported.",
-      "strengths": "Good resilience and coping strategies.",
-      "blindspots": "May underestimate minor symptoms."
+  "descriptions": {
+    "Minimal or None": {
+      "characteristics": "Few or no PTSD symptoms. General emotional health and resilience are strong.",
+      "strengths": "Good coping skills, able to manage stress without lasting impact.",
+      "blindspots": "Stressful events may still cause temporary distress, even if not prolonged.",
+      "advice": "Continue healthy routines: exercise, sleep, social support. Stay attentive to emotional well-being after stressful experiences."
     },
-    "Moderate Risk": {
-      "description": "Some PTSD symptoms present.",
-      "strengths": "Managing but may need support.",
-      "blindspots": "Symptoms could worsen without care."
+    "Mild": {
+      "characteristics": "Some intrusive memories, avoidance, or hypervigilance. Symptoms are present but manageable.",
+      "strengths": "Self-awareness and resilience provide strong coping potential.",
+      "blindspots": "Symptoms may worsen if ignored, especially under stress.",
+      "advice": "Practice grounding techniques, mindfulness, journaling, or prayer. Talk with a trusted person. Seek professional advice if symptoms persist beyond a month."
     },
-    "High Risk": {
-      "description": "Frequent or severe PTSD symptoms.",
-      "strengths": "Awareness of impact on life.",
-      "blindspots": "May require professional intervention."
+    "Moderate": {
+      "characteristics": "Noticeable PTSD symptoms that interfere with concentration, sleep, or mood.",
+      "strengths": "You recognize the effects of trauma and may be open to healing strategies.",
+      "blindspots": "Without attention, symptoms can reduce quality of life and relationships.",
+      "advice": "Seek professional counseling or therapy. Consider trauma-focused therapies (CBT, EMDR). Build supportive networks, maintain routines, and reduce isolation."
+    },
+    "Severe": {
+      "characteristics": "Frequent and intense PTSD symptoms significantly interfere with daily life and relationships.",
+      "strengths": "Awareness of symptom severity creates opportunity to seek meaningful help.",
+      "blindspots": "High stress may impair work, relationships, and physical health.",
+      "advice": "Strongly recommended to seek therapy with a trauma specialist. Focus on safety, support, and stabilization strategies. Healing is possible with proper care."
+    },
+    "Very Severe": {
+      "characteristics": "Very strong PTSD symptoms affecting most areas of life. May include intense flashbacks, avoidance, severe hypervigilance, and emotional distress.",
+      "strengths": "Seeking help at this stage shows courage and resilience.",
+      "blindspots": "Risk of additional complications such as depression, anxiety, or self-harm.",
+      "advice": "Seek immediate professional care. Trauma-focused therapy and medical treatment may be needed. If overwhelmed or unsafe, reach out to crisis hotlines or emergency services. Healing and recovery are possible with sustained support."
     }
   }
 }

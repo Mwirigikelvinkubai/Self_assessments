@@ -1,30 +1,59 @@
 {
-  "name": "Depression Screening",
   "questions": [
-    "I feel little interest or pleasure in doing things.",
-    "I feel down, depressed, or hopeless.",
-    "I have trouble concentrating on tasks."
+    "Little interest or pleasure in doing things.",
+    "Feeling down, depressed, or hopeless.",
+    "Trouble falling or staying asleep, or sleeping too much.",
+    "Feeling tired or having little energy.",
+    "Poor appetite or overeating.",
+    "Feeling bad about yourself — or that you are a failure or have let yourself or your family down.",
+    "Trouble concentrating on things, such as reading the newspaper or watching television.",
+    "Moving or speaking so slowly that other people could have noticed. Or the opposite — being so fidgety or restless that you have been moving around a lot more than usual.",
+    "Thoughts that you would be better off dead, or of hurting yourself in some way."
   ],
   "scoring": {
-    "Mild": [1],
-    "Moderate": [2],
-    "Severe": [3]
+    "method": "sum_all",
+    "min_total": 0,
+    "max_total": 27,
+    "thresholds": {
+      "Minimal or None": { "min": 0, "max": 4 },
+      "Mild": { "min": 5, "max": 9 },
+      "Moderate": { "min": 10, "max": 14 },
+      "Moderately Severe": { "min": 15, "max": 19 },
+      "Severe": { "min": 20, "max": 27 }
+    },
+    "labels": ["Not at all", "Several days", "More than half the days", "Nearly every day"],
+    "values": [0, 1, 2, 3]
   },
-  "resultMapping": {
+  "descriptions": {
+    "Minimal or None": {
+      "characteristics": "No or very few symptoms of depression. General mood and energy are stable.",
+      "strengths": "Good resilience and ability to manage stress. Daily functioning is not impaired.",
+      "blindspots": "Early warning signs can be overlooked; small mood dips may be dismissed.",
+      "advice": "Maintain healthy routines: regular sleep, exercise, balanced nutrition, and meaningful social connection. Continue monitoring well-being, especially during times of stress or transition."
+    },
     "Mild": {
-      "description": "Occasional depressive feelings.",
-      "strengths": "Able to function with few issues.",
-      "blindspots": "May ignore early warning signs."
+      "characteristics": "Some symptoms of low mood, fatigue, or negative thinking are present, but they may not severely affect functioning.",
+      "strengths": "Awareness and early recognition of symptoms allow for preventive action.",
+      "blindspots": "Symptoms can worsen if ignored. Stress or life events may increase vulnerability.",
+      "advice": "Build coping strategies now: exercise, journaling, prayer/meditation, or therapy. Talk with a trusted friend, mentor, or counselor. Monitor symptoms over 2–3 weeks; if persistent, consider professional evaluation."
     },
     "Moderate": {
-      "description": "Persistent depressive symptoms.",
-      "strengths": "Recognizes emotional state.",
-      "blindspots": "Symptoms may affect daily life."
+      "characteristics": "Symptoms are noticeable and affect motivation, sleep, appetite, or concentration. Daily functioning may be impacted.",
+      "strengths": "You are aware of the challenges and may already be considering support.",
+      "blindspots": "Symptoms may interfere with work, relationships, or health if untreated.",
+      "advice": "Seek professional support (e.g., counselor, psychologist, or physician). Consider therapy or counseling to develop strategies. Establish routines: physical activity, sleep hygiene, supportive relationships. Avoid isolation."
+    },
+    "Moderately Severe": {
+      "characteristics": "Symptoms are strong and frequent, likely interfering with most areas of life. Emotional pain may feel heavy and difficult to manage alone.",
+      "strengths": "Recognizing the severity is a strong step toward healing.",
+      "blindspots": "Without support, symptoms may worsen or lead to significant impairment.",
+      "advice": "Seek professional help promptly. Discuss therapy and possible medical treatment with a healthcare provider. Strengthen social support, limit isolation, and engage in small, manageable activities to build momentum."
     },
     "Severe": {
-      "description": "Intense depressive symptoms impacting daily function.",
-      "strengths": "Awareness of struggles.",
-      "blindspots": "Needs strong support or professional care."
+      "characteristics": "Severe symptoms significantly impair functioning. May include hopelessness, loss of energy, or recurring thoughts of self-harm.",
+      "strengths": "Awareness creates an opportunity to urgently get help.",
+      "blindspots": "Waiting or self-isolating increases risk of harm.",
+      "advice": "Seek immediate professional support (doctor, counselor, mental health provider). If you have thoughts of self-harm or suicide, please call your local emergency number or a crisis hotline right away. Share openly with a trusted person. Early treatment can greatly improve outcomes."
     }
   }
 }

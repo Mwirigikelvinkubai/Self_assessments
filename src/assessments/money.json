@@ -1,30 +1,85 @@
 {
-  "name": "Money Personality",
+  "title": "Money Personality Quiz",
   "questions": [
     "I decide how much of my income to save each month based on specific goals or priorities.",
+    "I evaluate investment opportunities by considering key factors like risk and potential return.",
+    "My beliefs and values shape how I view money and financial decisions.",
+    "I determine how much I give to others without compromising my own financial stability.",
     "My spending decisions are motivated by comfort, joy, or necessity.",
-    "I find certain aspects of financial management overwhelming or stressful."
+    "I find certain aspects of financial management, like budgeting or bill payments, overwhelming or stressful.",
+    "I am attracted to high-risk, high-reward financial opportunities.",
+    "I find it challenging to make financial decisions that conflict with my spiritual or personal values.",
+    "I have felt financially strained because of my generosity but have learned to manage the situation.",
+    "I often feel anxious about spending money, even on necessary or enjoyable items.",
+    "I rarely review my budget or track my spending habits.",
+    "I balance my portfolio by combining high-risk and low-risk investments.",
+    "Most of my purchases are spontaneous rather than planned in advance.",
+    "I have faced financial challenges due to overspending but have learned how to handle them.",
+    "I rely on specific methods to ensure that important financial responsibilities are met.",
+    "I have experienced significant financial losses from taking risks and learned valuable lessons.",
+    "I avoid discussing money matters with others because it feels uncomfortable.",
+    "I aim to enjoy my wealth while planning for long-term growth.",
+    "I carefully evaluate whether a financial risk is worth taking.",
+    "I embrace money as a tool for good while staying true to my values.",
+    "I have clear long-term financial goals and take steps to ensure I am on track to achieve them.",
+    "Ignoring finances has negatively impacted my long-term financial goals.",
+    "My giving habits are driven by strong emotions or values.",
+    "I rarely treat myself or splurge on something I want, and when I do, it feels uncomfortable.",
+    "I set boundaries and budgets for giving to balance generosity with financial stability.",
+    "I have learned valuable lessons from both successful and unsuccessful investments.",
+    "I create a safety net to protect against losses when risks don’t pay off.",
+    "I balance financial growth with a focus on purpose and community.",
+    "I understand how setting limits on giving allows me to continue helping others while securing my own needs.",
+    "I ensure my financial decisions align with my personal values and goals.",
+    "I am taking small, manageable steps to improve my financial habits.",
+    "I try to balance saving for the future while allowing myself to enjoy the present.",
+    "I incorporate saving into my lifestyle in ways that feel manageable and not restrictive.",
+    "I incorporate safer financial practices while maintaining my adventurous spirit."
   ],
   "scoring": {
-    "Saver": [1],
-    "Spender": [2],
-    "Avoider": [3]
+    "Saver": [1, 10, 21, 24, 32],
+    "Spender": [5, 13, 14, 33, 35],
+    "Avoider": [6, 11, 15, 22, 31],
+    "Giver": [4, 9, 23, 25, 29],
+    "Investor": [2, 12, 18, 26, 30],
+    "Risk-Taker": [7, 16, 19, 27, 34],
+    "Money Monk": [3, 8, 17, 20, 28]
   },
-  "resultMapping": {
+  "descriptions": {
     "Saver": {
-      "description": "Budget-focused and disciplined. Prefers to save for emergencies and long-term goals.",
-      "strengths": "Prepared for the future, minimizes debt.",
-      "blindspots": "Can miss out on present joys due to excessive frugality."
+      "characteristics": "Budget-focused and disciplined. Prefers to save for emergencies and long-term goals. Avoids unnecessary expenses and enjoys financial security.",
+      "strengths": "Well-prepared for the future, minimizes debt, and builds stability.",
+      "blindspots": "May be overly frugal and anxious about spending, even when beneficial."
     },
     "Spender": {
-      "description": "Enjoys life through spending. Prioritizes comfort and experiences.",
-      "strengths": "Creates memorable experiences, lives in the moment.",
-      "blindspots": "May face financial instability if not careful."
+      "characteristics": "Loves immediate gratification and enjoys life in the present moment.",
+      "strengths": "Knows how to enjoy life and use money for memorable experiences.",
+      "blindspots": "May accumulate debt or lack preparedness for financial emergencies."
     },
     "Avoider": {
-      "description": "Avoids thinking about money. Procrastinates on bills and budgeting.",
-      "strengths": "Less immediate stress about finances.",
-      "blindspots": "Can fall into debt or instability due to neglect."
+      "characteristics": "Avoids thinking about or managing finances, procrastinates on bills.",
+      "strengths": "Experiences less stress in the short term, can improve habits slowly.",
+      "blindspots": "Ignoring finances may cause debt, instability, or overwhelm later."
+    },
+    "Giver": {
+      "characteristics": "Finds fulfillment in helping others financially, prioritizes generosity.",
+      "strengths": "Builds strong relationships and contributes positively to community.",
+      "blindspots": "Over-giving may compromise personal financial stability and lead to burnout."
+    },
+    "Investor": {
+      "characteristics": "Focuses on wealth growth through investments, plans long-term.",
+      "strengths": "Creates wealth and financial independence, capitalizes on opportunities.",
+      "blindspots": "Over-focus on money may neglect present joys or relationships."
+    },
+    "Risk-Taker": {
+      "characteristics": "Enjoys bold, high-risk ventures with confidence and ambition.",
+      "strengths": "Achieves substantial success and innovation through bold moves.",
+      "blindspots": "Risk can cause big losses without safety nets or diversification."
+    },
+    "Money Monk": {
+      "characteristics": "Values simplicity, purpose, and avoids money-centered living.",
+      "strengths": "Lives meaningfully with purpose, inspires others beyond material wealth.",
+      "blindspots": "May face instability by avoiding financial planning altogether."
     }
   }
 }

@@ -1,14 +1,8 @@
-// App.js
-import React, { useState } from "react";
+// src/App.js
+import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
-
-// Quiz placeholder content
-const quizContent = {
-  "Money Personality": <p>[Money Personality Quiz Coming Soon]</p>,
-  "Burnout Check": <p>[Burnout Assessment Coming Soon]</p>,
-  "Depression Screening": <p>[Depression Screening Coming Soon]</p>,
-};
+import Assessments from "./pages/Assessments";
 
 function Home() {
   return (
@@ -28,43 +22,15 @@ function Home() {
   );
 }
 
-function Assessments() {
-  const [activeQuiz, setActiveQuiz] = useState(null);
-
-  return (
-    <section className="assessments">
-      <h2>Assessments</h2>
-      <p>
-        Choose a self-assessment below to begin. Click a tab to open that quiz
-        on the same page.
-      </p>
-      <div className="tabs">
-        {Object.keys(quizContent).map((quiz) => (
-          <button
-            key={quiz}
-            className={activeQuiz === quiz ? "tab active" : "tab"}
-            onClick={() => setActiveQuiz(quiz)}
-          >
-            {quiz}
-          </button>
-        ))}
-      </div>
-      <div className="quiz-area">
-        {activeQuiz ? quizContent[activeQuiz] : <p>Select an assessment to start.</p>}
-      </div>
-    </section>
-  );
-}
-
 function About() {
   return (
     <section className="about">
       <h2>About</h2>
       <p>
-        The Self-Assessment Hub is designed for MOHI staff and partners as a safe
-        space to reflect, grow, and gain insights. It combines different quizzes
-        (mental health, personality, leadership, etc.) into one platform for
-        convenience.
+        The Self-Assessment Hub is designed for MOHI staff and partners as a
+        safe space to reflect, grow, and gain insights. It combines different
+        quizzes (mental health, personality, leadership, etc.) into one platform
+        for convenience.
       </p>
     </section>
   );
@@ -74,7 +40,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {/* Header Navigation */}
+        {/* Header */}
         <header className="header">
           <h1>MOHI Self-Assessment Hub</h1>
           <nav>
@@ -86,7 +52,7 @@ function App() {
           </nav>
         </header>
 
-        {/* Routing */}
+        {/* Routes */}
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -97,7 +63,10 @@ function App() {
 
         {/* Footer */}
         <footer className="footer">
-          <p>&copy; {new Date().getFullYear()} Missions of Hope International - Leadership Development Department</p>
+          <p>
+            &copy; {new Date().getFullYear()} Missions of Hope International -
+            Leadership Development Department
+          </p>
         </footer>
       </div>
     </Router>

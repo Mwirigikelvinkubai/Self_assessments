@@ -1,30 +1,51 @@
 {
-  "name": "Burnout Assessment",
   "questions": [
-    "I feel emotionally drained by my work.",
-    "I feel less effective in my role than I used to.",
-    "I find it hard to relax after work."
+    "I feel emotionally exhausted by my work.",
+    "I feel physically drained at the end of the workday.",
+    "I find it hard to relax after work.",
+    "I feel cynical or negative about my work.",
+    "I feel less effective at work than I used to.",
+    "I have trouble concentrating because of work stress.",
+    "I feel detached from the people I serve or work with.",
+    "I feel irritable or impatient with colleagues or clients.",
+    "Small tasks feel overwhelming or pointless.",
+    "I feel I am working harder but accomplishing less.",
+    "I avoid thinking about work during my free time because it stresses me.",
+    "I have difficulty sleeping due to work-related thoughts.",
+    "I experience headaches, stomach issues, or other physical symptoms related to stress.",
+    "I feel unappreciated or unsupported at work.",
+    "I have considered quitting or changing jobs because of stress."
   ],
   "scoring": {
-    "Low": [1],
-    "Moderate": [2],
-    "High": [3]
+    "method": "sum_all", 
+    "min_total": 15,
+    "max_total": 75,
+    "thresholds": {
+      "Low Burnout Risk": { "min": 15, "max": 30 },
+      "Moderate Burnout Risk": { "min": 31, "max": 50 },
+      "High Burnout Risk": { "min": 51, "max": 75 }
+    },
+    "labels": ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"],
+    "values": [1, 2, 3, 4, 5]
   },
-  "resultMapping": {
-    "Low": {
-      "description": "Minimal signs of burnout.",
-      "strengths": "Good balance between work and rest.",
-      "blindspots": "Might ignore small stressors."
+  "descriptions": {
+    "Low Burnout Risk": {
+      "characteristics": "Energy and engagement are generally healthy. Occasional stress is present but manageable. You can recharge with routine rest and boundaries.",
+      "strengths": "Resilience, good recovery habits, effective boundaries, meaning and satisfaction in work.",
+      "blindspots": "Early warning signs can be easy to dismiss; you might normalize rising stress until it spikes.",
+      "advice": "Maintain protective habits: regular breaks, sleep, movement, and social connection. Continue setting boundaries around after-hours communication and workload. Do a quick weekly check-in on energy, mood, and workload to catch changes early."
     },
-    "Moderate": {
-      "description": "Some symptoms of burnout present.",
-      "strengths": "Aware of work-life balance issues.",
-      "blindspots": "Needs proactive stress management."
+    "Moderate Burnout Risk": {
+      "characteristics": "Noticeable fatigue, irritability, and/or reduced satisfaction. You may be working harder yet feeling less effective, with more cynicism creeping in.",
+      "strengths": "Awareness of stressors; motivation to improve; capacity to adjust routines and negotiate workload.",
+      "blindspots": "Pushing through without changes can raise risk quickly. Sleep and recovery often get sacrificed first.",
+      "advice": "Identify top 2–3 stress drivers (e.g., workload, role clarity, recognition). Set clear priorities and limits, schedule micro-breaks, and protect sleep. Discuss workload and expectations with a supervisor. Reconnect with meaning in your role; increase restorative activities outside work. Consider peer support or coaching."
     },
-    "High": {
-      "description": "Strong burnout symptoms present.",
-      "strengths": "Recognizes exhaustion.",
-      "blindspots": "May need immediate rest or professional help."
+    "High Burnout Risk": {
+      "characteristics": "Significant exhaustion, detachment/cynicism, and reduced sense of effectiveness. Work may feel overwhelming and recovery is difficult.",
+      "strengths": "Clear signal that change is needed now; your insight can guide effective support and boundaries.",
+      "blindspots": "Delaying support increases risk of health issues, relationship strain, and mistakes at work.",
+      "advice": "Seek support promptly: speak with a supervisor about workload adjustment or time off; use EAP or counseling if available; consider a healthcare professional to address sleep, mood, or physical symptoms. Reduce non-essential tasks, delegate where possible, and strengthen daily recovery (sleep, nutrition, movement, brief relaxation). If you experience thoughts of self-harm or feel unsafe, contact local emergency services or a crisis line immediately."
     }
   }
 }

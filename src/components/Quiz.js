@@ -1,154 +1,114 @@
+// src/components/Quiz.js
 import React, { useState } from "react";
-import "./Quiz.css";
 
-function Quiz({ data }) {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState([]);
+function Quiz({ title, data, onBack }) {
+  const { questions, scoring, descriptions } = data;
+  const [answers, setAnswers] = useState(Array(questions.length).fill(null));
+  const [step, setStep] = useState(0);
   const [result, setResult] = useState(null);
 
   const handleAnswer = (value) => {
-    const newAnswers = [...answers];
-    newAnswers[currentQuestion] = value;
-    setAnswers(newAnswers);
-  };
+    const updated = [...answers];
+    updated[step] = value;
+    setAnswers(updated);
 
-  const handleNext = () => {
-    if (answers[currentQuestion] === undefined) {
-      alert("Please select an option before continuing.");
-      return;
-    }
-
-    if (currentQuestion < data.questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
+    if (step < questions.length - 1) {
+      setStep(step + 1);
     } else {
-      calculateResult();
+      calculateResult(updated);
     }
   };
 
-  const calculateResult = () => {
-    let scores = {};
-    for (let type in data.scoring) {
-      scores[type] = 0;
-      data.scoring[type].forEach((q) => {
-        scores[type] += answers[q - 1] || 0;
-      });
-    }
+  const calculateResult = (finalAnswers) => {
+  // Case 1: index-based scoring (Money Personality)
+  if (Array.isArray(Object.values(scoring)[0])) {
+    const totals = {};
+    Object.keys(scoring).forEach((type) => (totals[type] = 0));
 
-    const best = Object.keys(scores).reduce((a, b) =>
-      scores[a] > scores[b] ? a : b
-    );
+    Object.entries(scoring).forEach(([type, indices]) => {
+      indices.forEach((qIndex) => {
+        const ans = finalAnswers[qIndex - 1];
+        if (ans !== null) totals[type] += ans;
+      });
+    });
+
+    const topType = Object.entries(totals).sort((a, b) => b[1] - a[1])[0][0];
+    setResult({ type: topType, ...descriptions[topType] });
+  }
+
+  // Case 2: threshold-based scoring (Depression, Burnout, PTSD)
+  else if (scoring.method === "sum_all") {
+    const total = finalAnswers.reduce((sum, val) => sum + (val || 0), 0);
+
+    let matched = "Minimal or None"; // fallback
+    Object.entries(scoring.thresholds).forEach(([label, range]) => {
+      if (total >= range.min && total <= range.max) {
+        matched = label;
+      }
+    });
 
     setResult({
-      type: best,
-      ...data.resultMapping[best],
+      type: matched,
+      score: total,
+      ...descriptions[matched],
     });
-  };
+  }
+};
 
-  const downloadCSV = () => {
+  
+
+  const exportCSV = () => {
     if (!result) return;
-
-    let csvContent =
-      "data:text/csv;charset=utf-8,Personality,Description,Strengths,Blindspots\n";
-    csvContent += `"${result.type}","${result.description}","${result.strengths}","${result.blindspots}"\n`;
-
+    const csvContent = `data:text/csv;charset=utf-8,Result,Details\n${result.type},"${JSON.stringify(
+      result
+    )}"`;
     const link = document.createElement("a");
-    link.setAttribute("href", encodeURI(csvContent));
-    link.setAttribute("download", `${data.name}_result.csv`);
+    link.href = encodeURI(csvContent);
+    link.download = `${title.replace(/\s+/g, "_").toLowerCase()}_result.csv`;
     document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
   };
+
+  const progress = Math.round(((step + 1) / questions.length) * 100);
 
   if (result) {
     return (
-      <div className="quiz-container">
-        <h3>Your Result: {result.type}</h3>
-        <p><b>Description:</b> {result.description}</p>
-        <p><b>Strengths:</b> {result.strengths}</p>
-        <p><b>Blindspots:</b> {result.blindspots}</p>
-        <button onClick={downloadCSV}>Download CSV</button>
+      <div className="quiz-result">
+        <h3>{title} Result: {result.type}</h3>
+        {"characteristics" in result && (
+          <>
+            <p><b>Characteristics:</b> {result.characteristics}</p>
+            <p><b>Strengths:</b> {result.strengths}</p>
+            <p><b>Blindspots:</b> {result.blindspots}</p>
+          </>
+        )}
+        {"advice" in result && (
+          <p><b>Advice:</b> {result.advice}</p>
+        )}
+        <button onClick={exportCSV}>Download Result as CSV</button>
+        <button onClick={onBack}>Back to Assessments</button>
       </div>
     );
   }
 
   return (
-    <div className="quiz-container">
+    <div className="quiz">
+      <h3>{title}</h3>
+      <h4>Question {step + 1} of {questions.length}</h4>
+      <p>{questions[step]}</p>
+      <div className="options">
+        {["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"].map(
+          (label, idx) => (
+            <button key={idx} onClick={() => handleAnswer(idx + 1)}>
+              {label}
+            </button>
+          )
+        )}
+      </div>
       <div className="progress-bar">
-        <div
-          className="progress"
-          style={{
-            width: `${((currentQuestion + 1) / data.questions.length) * 100}%`,
-          }}
-        ></div>
+        <div className="progress" style={{ width: `${progress}%` }}></div>
       </div>
-
-      <div className="question">
-        <p>{data.questions[currentQuestion]}</p>
-        <div className="options">
-          <input
-            type="radio"
-            id="opt1"
-            name="q"
-            value="1"
-            checked={answers[currentQuestion] === 1}
-            onChange={() => handleAnswer(1)}
-          />
-          <label htmlFor="opt1" className="strongly-disagree">
-            Strongly Disagree
-          </label>
-
-          <input
-            type="radio"
-            id="opt2"
-            name="q"
-            value="2"
-            checked={answers[currentQuestion] === 2}
-            onChange={() => handleAnswer(2)}
-          />
-          <label htmlFor="opt2" className="disagree">
-            Disagree
-          </label>
-
-          <input
-            type="radio"
-            id="opt3"
-            name="q"
-            value="3"
-            checked={answers[currentQuestion] === 3}
-            onChange={() => handleAnswer(3)}
-          />
-          <label htmlFor="opt3" className="neutral">
-            Neutral
-          </label>
-
-          <input
-            type="radio"
-            id="opt4"
-            name="q"
-            value="4"
-            checked={answers[currentQuestion] === 4}
-            onChange={() => handleAnswer(4)}
-          />
-          <label htmlFor="opt4" className="agree">
-            Agree
-          </label>
-
-          <input
-            type="radio"
-            id="opt5"
-            name="q"
-            value="5"
-            checked={answers[currentQuestion] === 5}
-            onChange={() => handleAnswer(5)}
-          />
-          <label htmlFor="opt5" className="strongly-agree">
-            Strongly Agree
-          </label>
-        </div>
-      </div>
-
-      <button onClick={handleNext}>
-        {currentQuestion < data.questions.length - 1 ? "Next" : "Finish"}
-      </button>
     </div>
   );
 }
