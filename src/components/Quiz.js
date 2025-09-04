@@ -6,7 +6,7 @@ function Quiz({ file }) {
   const [answers, setAnswers] = useState([]);
   const [step, setStep] = useState(0);
   const [result, setResult] = useState(null);
-  
+
   useEffect(() => {
     // reset state on new quiz load
     setData(null);
@@ -28,7 +28,7 @@ function Quiz({ file }) {
   // ✅ Handle "Coming Soon" placeholders safely
   if (!data.questions || !data.scoring) {
     return (
-      <div className="quiz coming-soon">
+      <div className="quiz coming-soon rotating-border-slow">
         <h3>{data.title || "Coming Soon"}</h3>
         <p>{data.description || "This assessment will be available soon."}</p>
       </div>
@@ -87,7 +87,7 @@ function Quiz({ file }) {
 
   if (result) {
     return (
-      <div className="results">
+      <div className="results rotating-border-slow">
         <h3>Result: {result.type}</h3>
         {result.score !== undefined && (
           <p>
@@ -118,14 +118,14 @@ function Quiz({ file }) {
   const progress = Math.round(((step + 1) / questions.length) * 100);
 
   return (
-    <div className="quiz">
+    <div className="rotating-border-slow quiz-container">
       {/* Progress bar */}
       <div className="progress-container">
         <div
           className="progress-bar"
           style={{
             width: `${progress}%`,
-            transition: "width 0.4s ease-in-out" // smooth animation
+            transition: "width 0.4s ease-in-out", // smooth animation
           }}
         ></div>
       </div>

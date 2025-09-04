@@ -1,0 +1,90 @@
+/* ================================
+   🎨 Rotating Border Theme
+   ================================ */
+:root {
+  --border-gradient: conic-gradient(
+    from 0deg,
+    #007bff,   /* blue */
+    #1dd1a1,   /* green */
+    #ff7b00,   /* sunset orange */
+    #007bff
+  );
+  --fast-rotation: 3s linear infinite;
+  --medium-rotation: 4s linear infinite;
+  --slow-rotation: 8s linear infinite;
+}
+
+/* Common rotating border setup */
+.rotating-border,
+.rotating-border-slow,
+.card.active {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.rotating-border::before,
+.rotating-border-slow::before,
+.card.active::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: var(--border-gradient);
+  -webkit-mask: linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+/* Rotation speeds */
+.card.active::before {
+  animation: rotate var(--fast-rotation);
+}
+
+.rotating-border::before {
+  animation: rotate var(--medium-rotation);
+}
+
+.rotating-border-slow::before {
+  animation: rotate var(--slow-rotation);
+}
+
+/* Smooth infinite rotation */
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* White mask inside active cards */
+.card.active::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 14px;
+  background: white;
+  z-index: 1;
+}
+
+.card.active * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Quiz container spotlight */
+.quiz-container {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  margin-top: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-container * {
+  position: relative;
+  z-index: 2;
+}

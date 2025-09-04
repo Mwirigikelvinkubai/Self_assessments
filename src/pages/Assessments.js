@@ -1,22 +1,22 @@
-// src/pages/Assessments.js
 import React, { useState } from "react";
 import Quiz from "../components/Quiz";
-
-const assessments = [
-  { file: "money.json", title: "Money Personality", description: "Discover your financial habits and how they shape your decisions." },
-  { file: "burnout.json", title: "Burnout Check", description: "Evaluate your current stress levels and identify early signs of burnout." },
-  { file: "depression.json", title: "Depression Screening", description: "Gain insight into your emotional well-being and detect symptoms of depression." },
-  { file: "ptsd.json", title: "PTSD Check", description: "Assess potential symptoms of post-traumatic stress and explore support options." },
-  { file: "leadership.json", title: "Leadership Style", description: "Explore your leadership approach and strengths." },
-  { file: "conflict.json", title: "Conflict Management", description: "Discover how you navigate and resolve conflicts." },
-  { file: "gifts.json", title: "Spiritual Gifts", description: "Coming soon – Identify your spiritual gifts and how to use them." },
-  { file: "teamwork.json", title: "Teamwork Health", description: "Coming soon – Assess the strength and health of your teamwork." },
-  { file: "ei.json", title: "Emotional Intelligence", description: "Coming soon – Measure your ability to recognize and manage emotions." },
-  { file: "resilience.json", title: "Resilience Test", description: "Coming soon – Evaluate your resilience and adaptability in challenges." },
-];
+import "./Assessments.css"; // import CSS
 
 function Assessments() {
   const [activeFile, setActiveFile] = useState(null);
+
+  const assessments = [
+    { file: "money.json", title: "Money Personality", description: "Discover your financial habits and how they shape your decisions." },
+    { file: "burnout.json", title: "Burnout Check", description: "Evaluate your current stress levels and identify early signs of burnout." },
+    { file: "depression.json", title: "Depression Screening", description: "Gain insight into your emotional well-being and detect symptoms of depression." },
+    { file: "ptsd.json", title: "PTSD Check", description: "Assess potential symptoms of post-traumatic stress and explore support options." },
+    { file: "leadership.json", title: "Leadership Style", description: "Explore your leadership approach and strengths." },
+    { file: "conflict.json", title: "Conflict Management", description: "Discover how you navigate and resolve conflicts." },
+    { file: "gifts.json", title: "Spiritual Gifts", description: "Coming soon – Identify your spiritual gifts and how to use them." },
+    { file: "teamwork.json", title: "Teamwork Health", description: "Coming soon – Assess the strength and health of your teamwork." },
+    { file: "ei.json", title: "Emotional Intelligence", description: "Coming soon – Measure your ability to recognize and manage emotions." },
+    { file: "resilience.json", title: "Resilience Test", description: "Coming soon – Evaluate your resilience and adaptability in challenges." },
+  ];
 
   return (
     <section style={{ padding: "2rem" }}>
@@ -26,7 +26,7 @@ function Assessments() {
       <div
         style={{
           overflow: "hidden",
-          maxHeight: activeFile ? "2000px" : "0px", // expands when active
+          maxHeight: activeFile ? "2000px" : "0px",
           transition: "max-height 0.6s ease-in-out",
           marginBottom: activeFile ? "2rem" : "0",
         }}
@@ -82,7 +82,7 @@ function Assessments() {
         {assessments.map((a) => (
           <div
             key={a.file}
-            className="card"
+            className={`card ${activeFile === a.file ? "active" : ""}`}
             style={{
               background: "#fff",
               padding: "1rem",
