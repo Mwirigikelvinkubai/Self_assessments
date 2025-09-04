@@ -1,38 +1,67 @@
-.App {
+/* Header */
+.header {
+  background: #004080;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+.header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+.header nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+.header nav a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+  background: #eee;
+  padding: 1rem;
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Sections */
+.intro, .assessments, .about {
+  padding: 2rem;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Tabs */
+.tabs {
+  margin-top: 1rem;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.tab {
+  margin: 0.25rem;
+  padding: 0.5rem 1rem;
+  background: #ddd;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.tab.active {
+  background: #004080;
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.quiz-area {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  min-height: 100px;
 }
