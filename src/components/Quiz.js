@@ -1,113 +1,106 @@
 // src/components/Quiz.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-function Quiz({ title, data, onBack }) {
-  const { questions, scoring, descriptions } = data;
-  const [answers, setAnswers] = useState(Array(questions.length).fill(null));
+function Quiz({ file }) {
+  const [data, setData] = useState(null);
+  const [answers, setAnswers] = useState([]);
   const [step, setStep] = useState(0);
   const [result, setResult] = useState(null);
 
+  useEffect(() => {
+    // reset state on new quiz load
+    setData(null);
+    setAnswers([]);
+    setStep(0);
+    setResult(null);
+
+    fetch(`/assessments/${file}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to load JSON");
+        return res.json();
+      })
+      .then((json) => setData(json))
+      .catch((err) => console.error("Error loading quiz:", err));
+  }, [file]);
+
+  if (!data) return <p>Loading quiz...</p>;
+
+  const { questions, scoring, descriptions } = data;
+
   const handleAnswer = (value) => {
-    const updated = [...answers];
-    updated[step] = value;
+    const updated = [...answers, value];
     setAnswers(updated);
 
-    if (step < questions.length - 1) {
-      setStep(step + 1);
-    } else {
+    if (updated.length === questions.length) {
       calculateResult(updated);
+    } else {
+      setStep(step + 1);
     }
   };
 
   const calculateResult = (finalAnswers) => {
-  // Case 1: index-based scoring (Money Personality)
-  if (Array.isArray(Object.values(scoring)[0])) {
-    const totals = {};
-    Object.keys(scoring).forEach((type) => (totals[type] = 0));
+    if (scoring.method === "sum_all") {
+      // Total sum scoring (Depression, Burnout, PTSD)
+      const total = finalAnswers.reduce((a, b) => a + b, 0);
 
-    Object.entries(scoring).forEach(([type, indices]) => {
-      indices.forEach((qIndex) => {
-        const ans = finalAnswers[qIndex - 1];
-        if (ans !== null) totals[type] += ans;
-      });
-    });
-
-    const topType = Object.entries(totals).sort((a, b) => b[1] - a[1])[0][0];
-    setResult({ type: topType, ...descriptions[topType] });
-  }
-
-  // Case 2: threshold-based scoring (Depression, Burnout, PTSD)
-  else if (scoring.method === "sum_all") {
-    const total = finalAnswers.reduce((sum, val) => sum + (val || 0), 0);
-
-    let matched = "Minimal or None"; // fallback
-    Object.entries(scoring.thresholds).forEach(([label, range]) => {
-      if (total >= range.min && total <= range.max) {
-        matched = label;
+      let label = "Unknown";
+      for (let [name, range] of Object.entries(scoring.thresholds)) {
+        if (total >= range.min && total <= range.max) {
+          label = name;
+          break;
+        }
       }
-    });
 
-    setResult({
-      type: matched,
-      score: total,
-      ...descriptions[matched],
-    });
-  }
-};
+      setResult({
+        type: label,
+        score: total,
+        ...descriptions[label],
+      });
+    } else {
+      // Indices scoring (Money Personality)
+      const totals = {};
+      Object.keys(scoring).forEach((type) => (totals[type] = 0));
 
-  
+      Object.entries(scoring).forEach(([type, indices]) => {
+        if (Array.isArray(indices)) {
+          indices.forEach((qIndex) => {
+            const ans = finalAnswers[qIndex - 1]; // adjust index
+            if (ans) totals[type] += ans;
+          });
+        }
+      });
 
-  const exportCSV = () => {
-    if (!result) return;
-    const csvContent = `data:text/csv;charset=utf-8,Result,Details\n${result.type},"${JSON.stringify(
-      result
-    )}"`;
-    const link = document.createElement("a");
-    link.href = encodeURI(csvContent);
-    link.download = `${title.replace(/\s+/g, "_").toLowerCase()}_result.csv`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+      const topType = Object.entries(totals).sort((a, b) => b[1] - a[1])[0][0];
+      setResult({ type: topType, ...descriptions[topType] });
+    }
   };
-
-  const progress = Math.round(((step + 1) / questions.length) * 100);
 
   if (result) {
     return (
-      <div className="quiz-result">
-        <h3>{title} Result: {result.type}</h3>
-        {"characteristics" in result && (
-          <>
-            <p><b>Characteristics:</b> {result.characteristics}</p>
-            <p><b>Strengths:</b> {result.strengths}</p>
-            <p><b>Blindspots:</b> {result.blindspots}</p>
-          </>
-        )}
-        {"advice" in result && (
-          <p><b>Advice:</b> {result.advice}</p>
-        )}
-        <button onClick={exportCSV}>Download Result as CSV</button>
-        <button onClick={onBack}>Back to Assessments</button>
+      <div className="results">
+        <h3>Result: {result.type}</h3>
+        {result.score !== undefined && <p><strong>Score:</strong> {result.score}</p>}
+        <p><strong>Characteristics:</strong> {result.characteristics}</p>
+        <p><strong>Strengths:</strong> {result.strengths}</p>
+        <p><strong>Blindspots:</strong> {result.blindspots}</p>
+        <p><strong>Advice:</strong> {result.advice}</p>
       </div>
     );
   }
 
   return (
     <div className="quiz">
-      <h3>{title}</h3>
-      <h4>Question {step + 1} of {questions.length}</h4>
+      <h3>Question {step + 1} of {questions.length}</h3>
       <p>{questions[step]}</p>
       <div className="options">
-        {["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"].map(
-          (label, idx) => (
-            <button key={idx} onClick={() => handleAnswer(idx + 1)}>
-              {label}
-            </button>
-          )
-        )}
-      </div>
-      <div className="progress-bar">
-        <div className="progress" style={{ width: `${progress}%` }}></div>
+        {scoring.labels.map((label, idx) => (
+          <button
+            key={idx}
+            onClick={() => handleAnswer(scoring.values[idx])}
+          >
+            {label}
+          </button>
+        ))}
       </div>
     </div>
   );

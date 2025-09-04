@@ -9,8 +9,22 @@ function Home() {
     <section className="intro">
       <h2>Welcome to the Self-Assessment Hub</h2>
       <p>
-        A one-stop platform for guided self-reflection. Explore tools to check
-        your well-being, personality, and leadership journey.
+        Your Journey of Growth Starts Here
+Welcome to MOHI’s Leadership Development Self-Assessment Home. This is your space to pause, reflect, and realign as you grow in your leadership walk.
+
+Here, you’ll discover tools that help you:
+
+Check in on your well-being and find ways to stay balanced and resilient.
+
+Explore your personality and uncover how your unique design shapes the way you lead and connect with others.
+
+Reflect on your leadership journey and celebrate how far you’ve come, while identifying the next steps forward.
+
+Use guided reflection tools to deepen self-awareness and nurture Christ-centered leadership.
+
+Open up pathways for growth, with practical recommendations for learning, mentorship, and development.
+
+This platform is here to support you—not just as a leader, but as a whole person—so you can continue to serve, inspire, and transform lives alongside the MOHI family.
       </p>
       <p>
         <b>
@@ -27,10 +41,22 @@ function About() {
     <section className="about">
       <h2>About</h2>
       <p>
-        The Self-Assessment Hub is designed for MOHI staff and partners as a
-        safe space to reflect, grow, and gain insights. It combines different
-        quizzes (mental health, personality, leadership, etc.) into one platform
-        for convenience.
+        The Self-Assessment Hub is created for MOHI staff and partners as a safe and supportive space to reflect, grow, and gain valuable insights. It combines a range of tools—covering mental health, personality, leadership, and overall well-being—into one convenient platform.
+
+Through this hub, you are encouraged to:
+
+Pause and reflect on your personal and leadership journey.
+
+Discover insights that strengthen self-awareness, resilience, and Christ-centered leadership.
+
+Access resources that nurture both personal well-being and professional growth.
+
+At MOHI, we believe that healthy, self-aware leaders are key to transforming lives and communities. This hub is designed to guide you in aligning your growth with our mission, while ensuring that you are supported in every step of your journey.
+
+📧 Email: leadershipdevelopment@mohiafrica.org
+
+📞 EXT 404
+🌍 Website: www.mohiafrica.org
       </p>
     </section>
   );

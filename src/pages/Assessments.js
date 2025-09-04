@@ -4,50 +4,39 @@ import Quiz from "../components/Quiz";
 
 function Assessments() {
   const [activeQuiz, setActiveQuiz] = useState(null);
-  const [quizData, setQuizData] = useState(null);
+  const [resetKey, setResetKey] = useState(0);
 
-  const quizzes = {
-    "Money Personality": () => import("../assessments/money.json"),
-    "Burnout Check": () => import("../assessments/burnout.json"),
-    "Depression Screening": () => import("../assessments/depression.json"),
-    "PTSD Assessment": () => import("../assessments/ptsd.json"),
+  const handleQuizChange = (quiz) => {
+    setActiveQuiz(quiz);
+    setResetKey((prev) => prev + 1); // force reset on tab change
   };
 
-  const loadQuiz = (quiz) => {
-    setActiveQuiz(quiz);
-    quizzes[quiz]()
-      .then((data) => setQuizData(data.default))
-      .catch((err) => console.error("Error loading quiz:", err));
+  const quizContent = {
+    "Money Personality": <Quiz key={resetKey} file="money.json" />,
+    "Burnout Check": <Quiz key={resetKey} file="burnout.json" />,
+    "Depression Screening": <Quiz key={resetKey} file="depression.json" />,
+    "PTSD Check": <Quiz key={resetKey} file="ptsd.json" />,
   };
 
   return (
     <section className="assessments">
       <h2>Assessments</h2>
       <p>Choose a self-assessment below to begin:</p>
+
       <div className="tabs">
-        {Object.keys(quizzes).map((quiz) => (
+        {Object.keys(quizContent).map((quiz) => (
           <button
             key={quiz}
-            className={activeQuiz === quiz ? "tab active" : "tab"}
-            onClick={() => loadQuiz(quiz)}
+            className={`tab ${activeQuiz === quiz ? "active" : ""}`}
+            onClick={() => handleQuizChange(quiz)}
           >
             {quiz}
           </button>
         ))}
       </div>
+
       <div className="quiz-area">
-        {quizData ? (
-          <Quiz
-            title={activeQuiz}
-            data={quizData}
-            onBack={() => {
-              setActiveQuiz(null);
-              setQuizData(null);
-            }}
-          />
-        ) : (
-          <p>Select an assessment to start.</p>
-        )}
+        {activeQuiz ? quizContent[activeQuiz] : <p>Select an assessment to start.</p>}
       </div>
     </section>
   );
