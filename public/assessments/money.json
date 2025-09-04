@@ -37,13 +37,18 @@
     "I incorporate safer financial practices while maintaining my adventurous spirit."
   ],
   "scoring": {
-    "Saver": [1, 10, 21, 24, 32],
-    "Spender": [5, 13, 14, 33, 35],
-    "Avoider": [6, 11, 15, 22, 31],
-    "Giver": [4, 9, 23, 25, 29],
-    "Investor": [2, 12, 18, 26, 30],
-    "Risk-Taker": [7, 16, 19, 27, 34],
-    "Money Monk": [3, 8, 17, 20, 28]
+    "method": "indices",
+    "labels": ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"],
+    "values": [1, 2, 3, 4, 5],
+    "categories": {
+      "Saver": [1, 10, 21, 24, 32],
+      "Spender": [5, 13, 14, 33, 35],
+      "Avoider": [6, 11, 15, 22, 31],
+      "Giver": [4, 9, 23, 25, 29],
+      "Investor": [2, 12, 18, 26, 30],
+      "Risk-Taker": [7, 16, 19, 27, 34],
+      "Money Monk": [3, 8, 17, 20, 28]
+    }
   },
   "descriptions": {
     "Saver": {

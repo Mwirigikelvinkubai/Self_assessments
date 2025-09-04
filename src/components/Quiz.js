@@ -6,7 +6,7 @@ function Quiz({ file }) {
   const [answers, setAnswers] = useState([]);
   const [step, setStep] = useState(0);
   const [result, setResult] = useState(null);
-
+  
   useEffect(() => {
     // reset state on new quiz load
     setData(null);
@@ -24,6 +24,16 @@ function Quiz({ file }) {
   }, [file]);
 
   if (!data) return <p>Loading quiz...</p>;
+
+  // ✅ Handle "Coming Soon" placeholders safely
+  if (!data.questions || !data.scoring) {
+    return (
+      <div className="quiz coming-soon">
+        <h3>{data.title || "Coming Soon"}</h3>
+        <p>{data.description || "This assessment will be available soon."}</p>
+      </div>
+    );
+  }
 
   const { questions, scoring, descriptions } = data;
 
@@ -59,9 +69,9 @@ function Quiz({ file }) {
     } else {
       // Indices scoring (Money Personality)
       const totals = {};
-      Object.keys(scoring).forEach((type) => (totals[type] = 0));
+      Object.keys(scoring.categories).forEach((type) => (totals[type] = 0));
 
-      Object.entries(scoring).forEach(([type, indices]) => {
+      Object.entries(scoring.categories).forEach(([type, indices]) => {
         if (Array.isArray(indices)) {
           indices.forEach((qIndex) => {
             const ans = finalAnswers[qIndex - 1]; // adjust index
@@ -79,28 +89,67 @@ function Quiz({ file }) {
     return (
       <div className="results">
         <h3>Result: {result.type}</h3>
-        {result.score !== undefined && <p><strong>Score:</strong> {result.score}</p>}
-        <p><strong>Characteristics:</strong> {result.characteristics}</p>
-        <p><strong>Strengths:</strong> {result.strengths}</p>
-        <p><strong>Blindspots:</strong> {result.blindspots}</p>
-        <p><strong>Advice:</strong> {result.advice}</p>
+        {result.score !== undefined && (
+          <p>
+            <strong>Score:</strong> {result.score}
+          </p>
+        )}
+        <p>
+          <strong>Characteristics:</strong> {result.characteristics}
+        </p>
+        <p>
+          <strong>Strengths:</strong> {result.strengths}
+        </p>
+        {result.blindspots && (
+          <p>
+            <strong>Blindspots:</strong> {result.blindspots}
+          </p>
+        )}
+        {result.advice && (
+          <p>
+            <strong>Advice:</strong> {result.advice}
+          </p>
+        )}
       </div>
     );
   }
 
+  // progress calculation
+  const progress = Math.round(((step + 1) / questions.length) * 100);
+
   return (
     <div className="quiz">
-      <h3>Question {step + 1} of {questions.length}</h3>
+      {/* Progress bar */}
+      <div className="progress-container">
+        <div
+          className="progress-bar"
+          style={{
+            width: `${progress}%`,
+            transition: "width 0.4s ease-in-out" // smooth animation
+          }}
+        ></div>
+      </div>
+
+      <h3>
+        Question {step + 1} of {questions.length}
+      </h3>
       <p>{questions[step]}</p>
       <div className="options">
-        {scoring.labels.map((label, idx) => (
-          <button
-            key={idx}
-            onClick={() => handleAnswer(scoring.values[idx])}
-          >
-            {label}
-          </button>
-        ))}
+        {scoring.labels && scoring.values ? (
+          // Use labels/values if provided (Burnout, Depression, PTSD, improved Money Personality)
+          scoring.labels.map((label, idx) => (
+            <button key={idx} onClick={() => handleAnswer(scoring.values[idx])}>
+              {label}
+            </button>
+          ))
+        ) : (
+          // Fallback (if labels missing)
+          [1, 2, 3, 4, 5].map((val) => (
+            <button key={val} onClick={() => handleAnswer(val)}>
+              {val}
+            </button>
+          ))
+        )}
       </div>
     </div>
   );
