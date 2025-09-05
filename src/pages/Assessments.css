@@ -205,3 +205,22 @@ h2, h3, p {
   width: 0%;
   transition: width 0.4s ease;
 }
+/* Base card style for all quiz popups */
+.quiz-container,
+.results {
+  background: var(--card-bg, #fff);
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  width: 90%;
+
+  /* NEW subtle border */
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+/* In dark mode, lighten the border */
+body.dark-mode .quiz-container,
+body.dark-mode .results {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}

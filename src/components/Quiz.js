@@ -1,6 +1,12 @@
+// src/components/Quiz.js
 import React, { useEffect, useState } from "react";
-import confetti from "canvas-confetti";
 
+/**
+ * Quiz component
+ * - Expects parent (Assessments.js) to render a surrounding .quiz-popup container.
+ * - Renders content inside .quiz-container / .results so styling is consistent.
+ * - Uses a small in-page confetti effect (no external dependency).
+ */
 function Quiz({ file, onClose }) {
   const [data, setData] = useState(null);
   const [answers, setAnswers] = useState([]);
@@ -20,27 +26,93 @@ function Quiz({ file, onClose }) {
         return res.json();
       })
       .then((json) => setData(json))
-      .catch((err) => console.error("Error loading quiz:", err));
+      .catch((err) => {
+        console.error("Error loading quiz:", err);
+        setData({ title: "Error", description: "Failed to load assessment." });
+      });
   }, [file]);
 
-  if (!data) return <p>Loading quiz...</p>;
+  // Lightweight fallback confetti (no external package)
+  const runConfetti = () => {
+    try {
+      const colors = ["#FF6B6B", "#FFB86B", "#4AD99B", "#4D8BFF", "#8A6CFF"];
+      const count = 40;
+      const container = document.createElement("div");
+      container.style.position = "fixed";
+      container.style.left = "0";
+      container.style.top = "0";
+      container.style.width = "100%";
+      container.style.height = "0";
+      container.style.pointerEvents = "none";
+      container.style.overflow = "visible";
+      container.style.zIndex = 9999;
+      document.body.appendChild(container);
 
-  // ✅ Handle "Coming Soon" placeholders safely
-  if (!data.questions || !data.scoring) {
+      for (let i = 0; i < count; i++) {
+        const particle = document.createElement("div");
+        const size = Math.floor(Math.random() * 10) + 6; // 6 - 15 px
+        particle.style.position = "absolute";
+        particle.style.left = Math.random() * 100 + "vw";
+        particle.style.top = "-10px";
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size * 1.3}px`;
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.opacity = String(0.9 - Math.random() * 0.5);
+        particle.style.borderRadius = `${Math.random() > 0.5 ? "3px" : "50%"}`;
+        particle.style.transform = `translateY(0) rotate(${Math.random() * 360}deg)`;
+        particle.style.transition = `transform ${900 + Math.floor(Math.random() * 600)}ms cubic-bezier(.2,.8,.2,1), opacity 900ms ease`;
+        container.appendChild(particle);
+
+        // trigger the fall with a small stagger
+        setTimeout(() => {
+          const fallY = window.innerHeight + 50 + Math.random() * 200;
+          const rotateDeg = 360 * (Math.random() > 0.5 ? 1 : -1);
+          particle.style.transform = `translateY(${fallY}px) rotate(${rotateDeg}deg)`;
+          particle.style.opacity = "0";
+        }, 20 + i * 8);
+        // remove particle after animation
+        setTimeout(() => {
+          particle.remove();
+          if (i === count - 1) {
+            container.remove();
+          }
+        }, 2000 + Math.floor(Math.random() * 500));
+      }
+    } catch (e) {
+      // if anything goes wrong, silently ignore confetti
+      // (we don't want to crash the quiz)
+      console.warn("Confetti fallback failed:", e);
+    }
+  };
+
+  // Loading state rendered inside the popup / card
+  if (!data) {
     return (
-      <div className="quiz-popup scale-in">
-        <div className="quiz rotating-border-slow">
-          <h3>{data.title || "Coming Soon"}</h3>
-          <p>{data.description || "This assessment will be available soon."}</p>
-          <button className="close-btn" onClick={onClose}>
-            Close
-          </button>
+      <div className="quiz-container scale-in">
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <h3>Loading…</h3>
+          <button className="close-btn" onClick={onClose}>Close</button>
         </div>
+        <p>Please wait while the assessment loads.</p>
       </div>
     );
   }
 
-  const { questions, scoring, descriptions } = data;
+  // Handle "Coming Soon" placeholders safely and use the same card container
+  if (!data.questions || !data.scoring) {
+    return (
+      <div className="quiz-container rotating-border-slow scale-in">
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <h3>{data.title || "Coming Soon"}</h3>
+          <button className="close-btn" onClick={onClose}>Close</button>
+        </div>
+        <p>{data.description || "This assessment will be available soon."}</p>
+      </div>
+    );
+  }
+
+  // Normal quiz flow
+  const { questions, scoring, descriptions = {} } = data;
 
   const handleAnswer = (value) => {
     const updated = [...answers, value];
@@ -49,86 +121,81 @@ function Quiz({ file, onClose }) {
     if (updated.length === questions.length) {
       calculateResult(updated);
     } else {
-      setStep(step + 1);
+      setStep((s) => s + 1);
     }
   };
 
   const calculateResult = (finalAnswers) => {
-    let resultObj;
+    // build result object
+    let resultObj = null;
 
-    if (scoring.method === "sum_all") {
+    if (scoring && scoring.method === "sum_all") {
       const total = finalAnswers.reduce((a, b) => a + b, 0);
-
       let label = "Unknown";
-      for (let [name, range] of Object.entries(scoring.thresholds)) {
-        if (total >= range.min && total <= range.max) {
-          label = name;
-          break;
+
+      if (scoring.thresholds) {
+        for (let [name, range] of Object.entries(scoring.thresholds)) {
+          // guard against missing min/max
+          const min = typeof range.min === "number" ? range.min : -Infinity;
+          const max = typeof range.max === "number" ? range.max : Infinity;
+          if (total >= min && total <= max) {
+            label = name;
+            break;
+          }
         }
       }
 
       resultObj = {
         type: label,
         score: total,
-        ...descriptions[label],
+        ...(descriptions[label] || {}),
       };
     } else {
-      const totals = {};
-      Object.keys(scoring.categories).forEach((type) => (totals[type] = 0));
+      // indices scoring (flexible handling)
+      const categories = scoring.categories || (() => {
+        // if the scoring object itself has arrays per category (like money.json), pick those
+        const cat = {};
+        Object.entries(scoring || {}).forEach(([k, v]) => {
+          if (Array.isArray(v)) cat[k] = v;
+        });
+        return cat;
+      })();
 
-      Object.entries(scoring.categories).forEach(([type, indices]) => {
+      const totals = {};
+      Object.keys(categories).forEach((type) => (totals[type] = 0));
+
+      Object.entries(categories).forEach(([type, indices]) => {
         if (Array.isArray(indices)) {
           indices.forEach((qIndex) => {
-            const ans = finalAnswers[qIndex - 1];
-            if (ans) totals[type] += ans;
+            const ans = finalAnswers[qIndex - 1]; // JSON indexes are 1-based
+            if (typeof ans === "number") totals[type] += ans;
           });
         }
       });
 
-      const topType = Object.entries(totals).sort((a, b) => b[1] - a[1])[0][0];
-      resultObj = { type: topType, ...descriptions[topType] };
+      const entries = Object.entries(totals);
+      if (entries.length === 0) {
+        resultObj = { type: "Unknown", ...(descriptions["Unknown"] || {}) };
+      } else {
+        const topType = entries.sort((a, b) => b[1] - a[1])[0][0];
+        resultObj = { type: topType, ...(descriptions[topType] || {}) };
+      }
     }
 
     setResult(resultObj);
 
-    // 🎉 trigger confetti when result is set
-    confetti({
-      particleCount: 120,
-      spread: 90,
-      origin: { y: 0.6 },
-    });
+    // run confetti (fallback implementation)
+    runConfetti();
   };
 
+  // Results view (inside card)
   if (result) {
     return (
-      <div className="quiz-popup scale-in">
-        <div className="results rotating-border-slow">
+      <div className="results rotating-border-slow scale-in">
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <h3>Result: {result.type}</h3>
-          {result.score !== undefined && (
-            <p>
-              <strong>Score:</strong> {result.score}
-            </p>
-          )}
-          <p>
-            <strong>Characteristics:</strong> {result.characteristics}
-          </p>
-          <p>
-            <strong>Strengths:</strong> {result.strengths}
-          </p>
-          {result.blindspots && (
-            <p>
-              <strong>Blindspots:</strong> {result.blindspots}
-            </p>
-          )}
-          {result.advice && (
-            <p>
-              <strong>Advice:</strong> {result.advice}
-            </p>
-          )}
-          <div className="result-actions">
-            <button className="close-btn" onClick={onClose}>
-              Close
-            </button>
+          <div>
+            <button className="close-btn" onClick={onClose}>Close</button>
             <button
               className="retake-btn"
               onClick={() => {
@@ -136,56 +203,75 @@ function Quiz({ file, onClose }) {
                 setStep(0);
                 setResult(null);
               }}
+              style={{ marginLeft: "8px" }}
             >
               Retake
             </button>
           </div>
         </div>
+
+        {result.score !== undefined && (
+          <p><strong>Score:</strong> {result.score}</p>
+        )}
+        {result.characteristics && (
+          <p><strong>Characteristics:</strong> {result.characteristics}</p>
+        )}
+        {result.strengths && (
+          <p><strong>Strengths:</strong> {result.strengths}</p>
+        )}
+        {result.blindspots && (
+          <p><strong>Blindspots:</strong> {result.blindspots}</p>
+        )}
+        {result.advice && (
+          <p><strong>Advice:</strong> {result.advice}</p>
+        )}
       </div>
     );
   }
 
-  const progress = Math.round(((step + 1) / questions.length) * 100);
+  // Progress calculation (guard for zero-length)
+  const progress = questions && questions.length ? Math.round(((step + 1) / questions.length) * 100) : 0;
+  const currentQuestion = questions[step];
 
   return (
-    <div className="quiz-popup scale-in">
-      <div className="rotating-border-slow quiz-container">
-        {/* Progress bar */}
-        <div className="progress-container">
-          <div
-            className="progress-bar"
-            style={{
-              width: `${progress}%`,
-              transition: "width 0.4s ease-in-out",
-            }}
-          ></div>
-        </div>
+    <div className="quiz-container rotating-border-slow scale-in">
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <h3>Question {step + 1} of {questions.length}</h3>
+        <button className="close-btn" onClick={onClose}>Close</button>
+      </div>
 
-        <h3>
-          Question {step + 1} of {questions.length}
-        </h3>
-        <p>{questions[step]}</p>
-        <div className="options">
-          {scoring.labels && scoring.values ? (
-            scoring.labels.map((label, idx) => (
-              <button key={idx} onClick={() => handleAnswer(scoring.values[idx])}>
-                {label}
-              </button>
-            ))
-          ) : (
-            [1, 2, 3, 4, 5].map((val) => (
-              <button key={val} onClick={() => handleAnswer(val)}>
-                {val}
-              </button>
-            ))
-          )}
-        </div>
+      {/* Progress bar */}
+      <div className="progress-container" aria-hidden>
+        <div
+          className="progress-bar"
+          style={{ width: `${progress}%`, transition: "width 0.4s ease-in-out" }}
+        />
+      </div>
 
-        <div className="quiz-footer">
-          <button className="close-btn" onClick={onClose}>
-            Close
-          </button>
-        </div>
+      <p>{currentQuestion}</p>
+
+      <div className="options" role="list">
+        {scoring.labels && scoring.values ? (
+          scoring.labels.map((label, idx) => (
+            <button
+              key={idx}
+              onClick={() => handleAnswer(scoring.values[idx])}
+              aria-label={`Answer ${label}`}
+            >
+              {label}
+            </button>
+          ))
+        ) : (
+          [1, 2, 3, 4, 5].map((val) => (
+            <button key={val} onClick={() => handleAnswer(val)} aria-label={`Answer ${val}`}>
+              {val}
+            </button>
+          ))
+        )}
+      </div>
+
+      <div className="quiz-footer" style={{ marginTop: 12 }}>
+        <button className="close-btn" onClick={onClose}>Close</button>
       </div>
     </div>
   );
