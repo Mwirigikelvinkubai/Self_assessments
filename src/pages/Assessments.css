@@ -174,3 +174,34 @@ h2, h3, p {
   background: #f1c40f;
   color: #111;
 }
+
+/* Glassmorphic card styling */
+.card {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+/* Progress bar */
+.progress-wrapper {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.progress-bar {
+  height: 10px;
+  background: linear-gradient(90deg, #00ff88, #007bff, #ff7b00);
+  width: 0%;
+  transition: width 0.4s ease;
+}

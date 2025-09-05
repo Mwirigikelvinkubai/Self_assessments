@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import confetti from "canvas-confetti";
 
 function Quiz({ file, onClose }) {
   const [data, setData] = useState(null);
@@ -31,7 +32,9 @@ function Quiz({ file, onClose }) {
         <div className="quiz rotating-border-slow">
           <h3>{data.title || "Coming Soon"}</h3>
           <p>{data.description || "This assessment will be available soon."}</p>
-          <button className="close-btn" onClick={onClose}>Close</button>
+          <button className="close-btn" onClick={onClose}>
+            Close
+          </button>
         </div>
       </div>
     );
@@ -51,6 +54,8 @@ function Quiz({ file, onClose }) {
   };
 
   const calculateResult = (finalAnswers) => {
+    let resultObj;
+
     if (scoring.method === "sum_all") {
       const total = finalAnswers.reduce((a, b) => a + b, 0);
 
@@ -62,11 +67,11 @@ function Quiz({ file, onClose }) {
         }
       }
 
-      setResult({
+      resultObj = {
         type: label,
         score: total,
         ...descriptions[label],
-      });
+      };
     } else {
       const totals = {};
       Object.keys(scoring.categories).forEach((type) => (totals[type] = 0));
@@ -81,8 +86,17 @@ function Quiz({ file, onClose }) {
       });
 
       const topType = Object.entries(totals).sort((a, b) => b[1] - a[1])[0][0];
-      setResult({ type: topType, ...descriptions[topType] });
+      resultObj = { type: topType, ...descriptions[topType] };
     }
+
+    setResult(resultObj);
+
+    // 🎉 trigger confetti when result is set
+    confetti({
+      particleCount: 120,
+      spread: 90,
+      origin: { y: 0.6 },
+    });
   };
 
   if (result) {
@@ -112,12 +126,19 @@ function Quiz({ file, onClose }) {
             </p>
           )}
           <div className="result-actions">
-            <button className="close-btn" onClick={onClose}>Close</button>
-            <button className="retake-btn" onClick={() => {
-              setAnswers([]);
-              setStep(0);
-              setResult(null);
-            }}>Retake</button>
+            <button className="close-btn" onClick={onClose}>
+              Close
+            </button>
+            <button
+              className="retake-btn"
+              onClick={() => {
+                setAnswers([]);
+                setStep(0);
+                setResult(null);
+              }}
+            >
+              Retake
+            </button>
           </div>
         </div>
       </div>
@@ -161,7 +182,9 @@ function Quiz({ file, onClose }) {
         </div>
 
         <div className="quiz-footer">
-          <button className="close-btn" onClick={onClose}>Close</button>
+          <button className="close-btn" onClick={onClose}>
+            Close
+          </button>
         </div>
       </div>
     </div>
