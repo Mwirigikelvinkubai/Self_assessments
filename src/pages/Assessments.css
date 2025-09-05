@@ -1,3 +1,62 @@
+/* ============================= */
+/* Theme Variables               */
+/* ============================= */
+:root {
+  --bg: #ffffff;
+  --card-bg: #ffffff;
+  --text: #111111;
+  --subtext: #444444;
+  --border: #e0e0e0;
+
+  --btn-primary: #198754;
+  --btn-danger: #dc3545;
+
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode {
+  --bg: #1c1c1c;
+  --card-bg: #2a2a2a;
+  --text: #f5f5f5;
+  --subtext: #cccccc;
+  --border: #333333;
+
+  --btn-primary: #20c997;
+  --btn-danger: #e74c3c;
+
+  --shadow: rgba(0, 0, 0, 0.6);
+}
+
+/* ============================= */
+/* General Layout                */
+/* ============================= */
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s, color 0.3s;
+}
+
+h2, h3, p {
+  transition: color 0.3s;
+}
+
+.card {
+  background: var(--card-bg);
+  color: var(--text);
+  box-shadow: 0 2px 6px var(--shadow);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.card p {
+  color: var(--subtext);
+}
+
+/* ============================= */
+/* Rotating border for active    */
+/* ============================= */
 .card.active {
   position: relative;
   overflow: hidden;
@@ -6,7 +65,7 @@
 .card.active::before {
   content: "";
   position: absolute;
-  inset: -3px; /* little outside the card */
+  inset: -3px;
   border-radius: 10px;
   background: conic-gradient(
     from 0deg,
@@ -23,164 +82,95 @@
 .card.active::after {
   content: "";
   position: absolute;
-  inset: 2px; /* keeps inside white */
+  inset: 2px;
   border-radius: 8px;
-  background: white;
+  background: var(--card-bg);
   z-index: 1;
 }
 
 .card.active * {
   position: relative;
-  z-index: 2; /* keep text and button above the white mask */
+  z-index: 2;
 }
 
 @keyframes rotateBorder {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-/* Rotating gradient border effect */
-.rotating-border {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  z-index: 0;
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
-.rotating-border::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  padding: 2px;
-  background: conic-gradient(
-    from 0deg,
-    #ff6b6b,
-    #feca57,
-    #48dbfb,
-    #1dd1a1,
-    #ff6b6b
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: destination-out;
-  mask-composite: exclude;
-  animation: rotate 4s linear infinite;
-  z-index: -1;
-}
-
-@keyframes rotate {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Quiz box styling */
-.quiz-container {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 16px;
-  margin-top: 1rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-.rotating-border-slow {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  z-index: 0;
-}
-
-.rotating-border-slow::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  padding: 2px;
-  background: conic-gradient(
-    from 0deg,
-    #ff6b6b,
-    #feca57,
-    #48dbfb,
-    #1dd1a1,
-    #ff6b6b
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: destination-out;
-  mask-composite: exclude;
-  animation: rotate-slow 8s linear infinite; /* slower */
-  z-index: -1;
-}
-
-@keyframes rotate-slow {
-  to {
-    transform: rotate(360deg);
-  }
-}
-.quiz-overlay {
+/* ============================= */
+/* Quiz Popup + Results          */
+/* ============================= */
+.quiz-popup {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65); /* dark backdrop */
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999; /* above everything */
-  animation: fadeIn 0.3s ease;
+  z-index: 999;
+  animation: scaleIn 0.3s ease;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
-/* Centered floating quiz card (no dim backdrop) */
-.quiz-popup {
-  position: fixed;
-  top: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(860px, calc(100vw - 2rem));
-  background: #fff;
+
+.quiz-container,
+.results {
+  background: var(--card-bg);
+  color: var(--text);
+  padding: 1.5rem;
   border-radius: 16px;
-  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.18);
-  padding: 1rem;
-  z-index: 999; /* above the grid/cards */
+  box-shadow: 0 6px 16px var(--shadow);
+  max-width: 600px;
+  width: 90%;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
 }
 
-/* Slow, calm rotating border for the popup */
-.quiz-popup.live-border::before {
-  animation-duration: 8s; /* slower than the cards */
-}
-
-/* Header + close button inside the quiz */
-.quiz-header {
+/* ============================= */
+/* Buttons                       */
+/* ============================= */
+.result-actions,
+.quiz-footer {
+  margin-top: 1rem;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: .75rem;
-  margin-bottom: .75rem;
 }
 
-.quiz-header h3 {
-  margin: 0;
-  font-size: 1.1rem;
+.close-btn,
+.retake-btn,
+.start-btn,
+.toggle-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: filter 0.2s;
+}
+
+.start-btn {
+  color: #fff;
 }
 
 .close-btn {
-  border: none;
-  background: #e74c3c;
+  background: var(--btn-danger);
   color: #fff;
-  padding: .4rem .75rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
 }
-.close-btn:hover { filter: brightness(0.92); }
+.close-btn:hover { filter: brightness(0.9); }
 
+.retake-btn {
+  background: var(--btn-primary);
+  color: #fff;
+}
+.retake-btn:hover { filter: brightness(0.95); }
 
+.toggle-btn {
+  background: #2c3e50;
+  color: #fff;
+}
+.dark-mode .toggle-btn {
+  background: #f1c40f;
+  color: #111;
+}

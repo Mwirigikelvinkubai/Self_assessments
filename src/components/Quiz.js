@@ -1,4 +1,3 @@
-// src/components/Quiz.js
 import React, { useEffect, useState } from "react";
 
 function Quiz({ file, onClose }) {
@@ -23,42 +22,22 @@ function Quiz({ file, onClose }) {
       .catch((err) => console.error("Error loading quiz:", err));
   }, [file]);
 
-  // Loading state inside the popup box
-  if (!data) {
-    return (
-      <div className="quiz-container">
-        <div className="quiz-header">
-          <h3>Loading…</h3>
-          {onClose && (
-            <button className="close-btn" onClick={onClose} aria-label="Close">
-              Close
-            </button>
-          )}
-        </div>
-        <p>Please wait while we load this assessment.</p>
-      </div>
-    );
-  }
+  if (!data) return <p>Loading quiz...</p>;
 
-  // Handle "Coming Soon" placeholders safely
-  const isPlaceholder = !data.questions || !data.scoring;
-  if (isPlaceholder) {
+  // ✅ Handle "Coming Soon" placeholders safely
+  if (!data.questions || !data.scoring) {
     return (
-      <div className="quiz-container">
-        <div className="quiz-header">
+      <div className="quiz-popup scale-in">
+        <div className="quiz rotating-border-slow">
           <h3>{data.title || "Coming Soon"}</h3>
-          {onClose && (
-            <button className="close-btn" onClick={onClose} aria-label="Close">
-              Close
-            </button>
-          )}
+          <p>{data.description || "This assessment will be available soon."}</p>
+          <button className="close-btn" onClick={onClose}>Close</button>
         </div>
-        <p>{data.description || "This assessment will be available soon."}</p>
       </div>
     );
   }
 
-  const { questions, scoring, descriptions = {} } = data;
+  const { questions, scoring, descriptions } = data;
 
   const handleAnswer = (value) => {
     const updated = [...answers, value];
@@ -67,135 +46,123 @@ function Quiz({ file, onClose }) {
     if (updated.length === questions.length) {
       calculateResult(updated);
     } else {
-      setStep((s) => s + 1);
+      setStep(step + 1);
     }
   };
 
   const calculateResult = (finalAnswers) => {
     if (scoring.method === "sum_all") {
-      // Total sum scoring (Depression, Burnout, PTSD)
       const total = finalAnswers.reduce((a, b) => a + b, 0);
 
       let label = "Unknown";
-      if (scoring.thresholds) {
-        for (let [name, range] of Object.entries(scoring.thresholds)) {
-          if (total >= range.min && total <= range.max) {
-            label = name;
-            break;
-          }
+      for (let [name, range] of Object.entries(scoring.thresholds)) {
+        if (total >= range.min && total <= range.max) {
+          label = name;
+          break;
         }
       }
 
       setResult({
         type: label,
         score: total,
-        ...(descriptions[label] || {}),
+        ...descriptions[label],
       });
     } else {
-      // Indices scoring (Money Personality)
-      const categories = scoring.categories || scoring; // support both shapes
       const totals = {};
-      Object.keys(categories).forEach((type) => (totals[type] = 0));
+      Object.keys(scoring.categories).forEach((type) => (totals[type] = 0));
 
-      Object.entries(categories).forEach(([type, indices]) => {
+      Object.entries(scoring.categories).forEach(([type, indices]) => {
         if (Array.isArray(indices)) {
           indices.forEach((qIndex) => {
-            const ans = finalAnswers[qIndex - 1]; // questions are 1-based in indices
-            if (typeof ans === "number") totals[type] += ans;
+            const ans = finalAnswers[qIndex - 1];
+            if (ans) totals[type] += ans;
           });
         }
       });
 
       const topType = Object.entries(totals).sort((a, b) => b[1] - a[1])[0][0];
-      setResult({ type: topType, ...(descriptions[topType] || {}) });
+      setResult({ type: topType, ...descriptions[topType] });
     }
   };
 
-  // Results view inside the popup
   if (result) {
     return (
-      <div className="quiz-container">
-        <div className="quiz-header">
+      <div className="quiz-popup scale-in">
+        <div className="results rotating-border-slow">
           <h3>Result: {result.type}</h3>
-          {onClose && (
-            <button className="close-btn" onClick={onClose} aria-label="Close">
-              Close
-            </button>
+          {result.score !== undefined && (
+            <p>
+              <strong>Score:</strong> {result.score}
+            </p>
           )}
-        </div>
-
-        {result.score !== undefined && (
-          <p>
-            <strong>Score:</strong> {result.score}
-          </p>
-        )}
-        {result.characteristics && (
           <p>
             <strong>Characteristics:</strong> {result.characteristics}
           </p>
-        )}
-        {result.strengths && (
           <p>
             <strong>Strengths:</strong> {result.strengths}
           </p>
-        )}
-        {result.blindspots && (
-          <p>
-            <strong>Blindspots:</strong> {result.blindspots}
-          </p>
-        )}
-        {result.advice && (
-          <p>
-            <strong>Advice:</strong> {result.advice}
-          </p>
-        )}
+          {result.blindspots && (
+            <p>
+              <strong>Blindspots:</strong> {result.blindspots}
+            </p>
+          )}
+          {result.advice && (
+            <p>
+              <strong>Advice:</strong> {result.advice}
+            </p>
+          )}
+          <div className="result-actions">
+            <button className="close-btn" onClick={onClose}>Close</button>
+            <button className="retake-btn" onClick={() => {
+              setAnswers([]);
+              setStep(0);
+              setResult(null);
+            }}>Retake</button>
+          </div>
+        </div>
       </div>
     );
   }
 
-  // progress calculation
   const progress = Math.round(((step + 1) / questions.length) * 100);
 
   return (
-    <div className="quiz-container">
-      <div className="quiz-header">
+    <div className="quiz-popup scale-in">
+      <div className="rotating-border-slow quiz-container">
+        {/* Progress bar */}
+        <div className="progress-container">
+          <div
+            className="progress-bar"
+            style={{
+              width: `${progress}%`,
+              transition: "width 0.4s ease-in-out",
+            }}
+          ></div>
+        </div>
+
         <h3>
           Question {step + 1} of {questions.length}
         </h3>
-        {onClose && (
-          <button className="close-btn" onClick={onClose} aria-label="Close">
-            Close
-          </button>
-        )}
-      </div>
+        <p>{questions[step]}</p>
+        <div className="options">
+          {scoring.labels && scoring.values ? (
+            scoring.labels.map((label, idx) => (
+              <button key={idx} onClick={() => handleAnswer(scoring.values[idx])}>
+                {label}
+              </button>
+            ))
+          ) : (
+            [1, 2, 3, 4, 5].map((val) => (
+              <button key={val} onClick={() => handleAnswer(val)}>
+                {val}
+              </button>
+            ))
+          )}
+        </div>
 
-      {/* Progress bar */}
-      <div className="progress-container">
-        <div
-          className="progress-bar"
-          style={{
-            width: `${progress}%`,
-            transition: "width 0.4s ease-in-out",
-          }}
-        ></div>
-      </div>
-
-      <p>{questions[step]}</p>
-
-      <div className="options">
-        {scoring.labels && scoring.values ? (
-          scoring.labels.map((label, idx) => (
-            <button key={idx} onClick={() => handleAnswer(scoring.values[idx])}>
-              {label}
-            </button>
-          ))
-        ) : (
-          [1, 2, 3, 4, 5].map((val) => (
-            <button key={val} onClick={() => handleAnswer(val)}>
-              {val}
-            </button>
-          ))
-        )}
+        <div className="quiz-footer">
+          <button className="close-btn" onClick={onClose}>Close</button>
+        </div>
       </div>
     </div>
   );
