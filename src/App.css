@@ -222,3 +222,22 @@ main {
     gap: 10px;
   }
 }
+.quiz-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65); /* dark backdrop */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999; /* above everything */
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

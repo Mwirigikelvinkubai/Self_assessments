@@ -1,81 +1,84 @@
-/* ================================
-   🎨 Rotating Border Theme
-   ================================ */
-:root {
-  --border-gradient: conic-gradient(
-    from 0deg,
-    #007bff,   /* blue */
-    #1dd1a1,   /* green */
-    #ff7b00,   /* sunset orange */
-    #007bff
-  );
-  --fast-rotation: 3s linear infinite;
-  --medium-rotation: 4s linear infinite;
-  --slow-rotation: 8s linear infinite;
-}
-
-/* Common rotating border setup */
-.rotating-border,
-.rotating-border-slow,
 .card.active {
   position: relative;
-  border-radius: 16px;
   overflow: hidden;
+}
+
+.card.active::before {
+  content: "";
+  position: absolute;
+  inset: -3px; /* little outside the card */
+  border-radius: 10px;
+  background: conic-gradient(
+    from 0deg,
+    #ff0057,
+    #ff7b00,
+    #00ff88,
+    #007bff,
+    #ff0057
+  );
+  animation: rotateBorder 3s linear infinite;
   z-index: 0;
 }
 
-.rotating-border::before,
-.rotating-border-slow::before,
-.card.active::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  padding: 2px;
-  background: var(--border-gradient);
-  -webkit-mask: linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: destination-out;
-  mask-composite: exclude;
-  z-index: -1;
-}
-
-/* Rotation speeds */
-.card.active::before {
-  animation: rotate var(--fast-rotation);
-}
-
-.rotating-border::before {
-  animation: rotate var(--medium-rotation);
-}
-
-.rotating-border-slow::before {
-  animation: rotate var(--slow-rotation);
-}
-
-/* Smooth infinite rotation */
-@keyframes rotate {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* White mask inside active cards */
 .card.active::after {
   content: "";
   position: absolute;
-  inset: 2px;
-  border-radius: 14px;
+  inset: 2px; /* keeps inside white */
+  border-radius: 8px;
   background: white;
   z-index: 1;
 }
 
 .card.active * {
   position: relative;
-  z-index: 2;
+  z-index: 2; /* keep text and button above the white mask */
 }
 
-/* Quiz container spotlight */
+@keyframes rotateBorder {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* Rotating gradient border effect */
+.rotating-border {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.rotating-border::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(
+    from 0deg,
+    #ff6b6b,
+    #feca57,
+    #48dbfb,
+    #1dd1a1,
+    #ff6b6b
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  animation: rotate 4s linear infinite;
+  z-index: -1;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Quiz box styling */
 .quiz-container {
   background: white;
   padding: 1.5rem;
@@ -83,8 +86,101 @@
   margin-top: 1rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
-
-.quiz-container * {
+.rotating-border-slow {
   position: relative;
-  z-index: 2;
+  border-radius: 16px;
+  overflow: hidden;
+  z-index: 0;
 }
+
+.rotating-border-slow::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(
+    from 0deg,
+    #ff6b6b,
+    #feca57,
+    #48dbfb,
+    #1dd1a1,
+    #ff6b6b
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  animation: rotate-slow 8s linear infinite; /* slower */
+  z-index: -1;
+}
+
+@keyframes rotate-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.quiz-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65); /* dark backdrop */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999; /* above everything */
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Centered floating quiz card (no dim backdrop) */
+.quiz-popup {
+  position: fixed;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(860px, calc(100vw - 2rem));
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.18);
+  padding: 1rem;
+  z-index: 999; /* above the grid/cards */
+}
+
+/* Slow, calm rotating border for the popup */
+.quiz-popup.live-border::before {
+  animation-duration: 8s; /* slower than the cards */
+}
+
+/* Header + close button inside the quiz */
+.quiz-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-bottom: .75rem;
+}
+
+.quiz-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.close-btn {
+  border: none;
+  background: #e74c3c;
+  color: #fff;
+  padding: .4rem .75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.close-btn:hover { filter: brightness(0.92); }
+
+
