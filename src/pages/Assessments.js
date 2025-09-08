@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Quiz from "../components/Quiz";
+import TypingTest from "../components/TypingTest"; // ✅ new import
+import Confetti from "react-confetti"; // ✅ new import
 import "./Assessments.css";
 
 function Assessments() {
   const [activeFile, setActiveFile] = useState(null);
   const [darkMode, setDarkMode] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false); // ✅ new state
 
   const assessments = [
     { file: "money.json", title: "Money Personality", description: "Discover your financial habits and how they shape your decisions." },
@@ -17,6 +20,9 @@ function Assessments() {
     { file: "teamwork.json", title: "Teamwork Health", description: "Coming soon – Assess the strength and health of your teamwork." },
     { file: "ei.json", title: "Emotional Intelligence", description: "Coming soon – Measure your ability to recognize and manage emotions." },
     { file: "resilience.json", title: "Resilience Test", description: "Coming soon – Evaluate your resilience and adaptability in challenges." },
+
+    // ✅ new assessment option
+    { file: "typing", title: "Typing Test", description: "Test your typing speed and accuracy with live feedback." },
   ];
 
   // apply/remove dark-mode class to <body>
@@ -41,10 +47,26 @@ function Assessments() {
         </button>
       </div>
 
-      {/* Popup for quiz */}
+      {/* 🎉 Confetti celebration */}
+      {showConfetti && (
+        <Confetti
+          numberOfPieces={300}
+          recycle={false}
+          onConfettiComplete={() => setShowConfetti(false)}
+        />
+      )}
+
+      {/* Popup for quiz or typing test */}
       {activeFile && (
         <div className="quiz-popup">
-          <Quiz file={activeFile} onClose={() => setActiveFile(null)} />
+          {activeFile === "typing" ? (
+            <TypingTest
+              onClose={() => setActiveFile(null)}
+              onComplete={() => setShowConfetti(true)} // ✅ trigger confetti when test ends
+            />
+          ) : (
+            <Quiz file={activeFile} onClose={() => setActiveFile(null)} />
+          )}
         </div>
       )}
 

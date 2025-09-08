@@ -224,3 +224,25 @@ body.dark-mode .quiz-container,
 body.dark-mode .results {
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
+.typing-text {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.typing-text .correct {
+  color: green;
+}
+
+.typing-text .incorrect {
+  color: red;
+  text-decoration: underline;
+}
+
+.typing-text .pending {
+  color: #aaa;
+}
