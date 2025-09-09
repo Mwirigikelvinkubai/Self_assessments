@@ -1,5 +1,102 @@
 {
-  "title": "Leadership Style (Coming Soon)",
-  "description": "This assessment will help you explore your leadership style, strengths, and how you influence others. Full quiz content will be available soon.",
-  "questions": []
+  "title": "Leadership Style Assessment",
+  "description": "This 40-item assessment evaluates your tendencies across seven leadership styles. For each statement, select how well it describes you: 1 = Strongly Disagree, 5 = Strongly Agree.",
+  "questions": [
+    { "question": "I articulate a clear and inspiring vision for the future." },
+    { "question": "I encourage innovative thinking and new approaches to problems." },
+    { "question": "I talk about long-term goals and connect them to daily tasks." },
+    { "question": "I set high standards and model the behaviour I expect." },
+    { "question": "I recognize and reward achievements tied to performance goals." },
+    { "question": "I define clear structures, rules, and responsibilities." },
+    { "question": "I monitor progress closely and provide corrective feedback when needed." },
+    { "question": "I emphasize accountability through performance metrics." },
+    { "question": "I prioritize the personal growth and wellbeing of my team members." },
+    { "question": "I actively listen to colleagues and remove obstacles to help them succeed." },
+    { "question": "I empower people by giving them autonomy with support." },
+    { "question": "I put the needs of others before my own when leading." },
+    { "question": "In urgent situations, I make quick, unilateral decisions." },
+    { "question": "I prefer a directive approach that ensures compliance." },
+    { "question": "I act decisively even when others have not been consulted." },
+    { "question": "I involve my team in decisions that affect them directly." },
+    { "question": "I encourage consensus and collective problem-solving." },
+    { "question": "I value input from multiple people before making a choice." },
+    { "question": "I delegate tasks but remain engaged to ensure alignment." },
+    { "question": "I allow experienced staff to self-direct with minimal interference." },
+    { "question": "I trust capable individuals to take ownership of their work." },
+    { "question": "I avoid micromanaging and step back when the team has expertise." },
+    { "question": "I provide minimal oversight unless performance declines." },
+    { "question": "I coach people by asking guiding questions instead of giving solutions." },
+    { "question": "I set learning and development goals with team members." },
+    { "question": "I offer consistent feedback to help people grow in their roles." },
+    { "question": "I focus on building strengths rather than only fixing weaknesses." },
+    { "question": "I frequently remind people of the larger mission behind their work." },
+    { "question": "I use recognition and tangible rewards to maintain motivation." },
+    { "question": "I correct poor performance directly and immediately." },
+    { "question": "I regularly check in on stress and workload among my staff." },
+    { "question": "I sacrifice my own preferences to support team needs." },
+    { "question": "When necessary, I exert authority firmly to restore order." },
+    { "question": "I encourage open dialogue and adapt plans based on feedback." },
+    { "question": "I build consensus even if it slows down decision-making." },
+    { "question": "I give freedom to teams of experts, stepping in only when needed." },
+    { "question": "I spend significant time coaching individuals for long-term growth." },
+    { "question": "I help team members identify their strengths and align work accordingly." },
+    { "question": "I encourage challenging the status quo and experimenting with new methods." },
+    { "question": "I adapt my style depending on the maturity and capability of the team." }
+  ],
+  "scoring": {
+    "method": "percentile",
+    "categories": {
+      "Transformational": [1,2,3,4,28,39],
+      "Transactional": [5,6,7,8,29,30],
+      "Servant": [9,10,11,12,31,32],
+      "Autocratic": [13,14,15,33],
+      "Democratic": [16,17,18,19,34,35],
+      "LaissezFaire": [20,21,22,23,36],
+      "Coaching": [24,25,26,27,37,38,40]
+    }
+  },
+  "descriptions": {
+    "Transformational": {
+      "characteristics": "Inspires and motivates others through vision, meaning, and innovation.",
+      "strengths": "Boosts morale, drives engagement and creativity, builds future leaders.",
+      "blindspots": "May neglect practical details or overwhelm others with too much change.",
+      "advice": "Balance big-picture vision with structured follow-through."
+    },
+    "Transactional": {
+      "characteristics": "Focuses on structure, compliance, and performance through rewards and corrections.",
+      "strengths": "Provides clarity, consistency, and predictable results.",
+      "blindspots": "Can stifle creativity and over-rely on external motivators.",
+      "advice": "Blend clear standards with opportunities for growth and autonomy."
+    },
+    "Servant": {
+      "characteristics": "Puts team needs first, focusing on development and wellbeing.",
+      "strengths": "Builds trust, loyalty, and a supportive culture.",
+      "blindspots": "May avoid tough calls or delay addressing poor performance.",
+      "advice": "Pair care for people with accountability to achieve results."
+    },
+    "Autocratic": {
+      "characteristics": "Directive and authoritative, especially in crisis or fast-moving contexts.",
+      "strengths": "Provides clarity and speed under pressure.",
+      "blindspots": "Can alienate or demotivate when overused.",
+      "advice": "Use authority decisively in emergencies but allow input in normal times."
+    },
+    "Democratic": {
+      "characteristics": "Involves team members in decision-making and values shared ownership.",
+      "strengths": "Encourages commitment, buy-in, and diverse perspectives.",
+      "blindspots": "Decision-making may slow and responsibility may blur.",
+      "advice": "Seek input efficiently and then move decisively."
+    },
+    "LaissezFaire": {
+      "characteristics": "Provides autonomy, trusting skilled individuals to lead themselves.",
+      "strengths": "Empowers experts and fosters independence.",
+      "blindspots": "May lead to lack of coordination or unclear accountability.",
+      "advice": "Stay engaged enough to monitor outcomes and provide guidance when needed."
+    },
+    "Coaching": {
+      "characteristics": "Emphasizes long-term development, mentoring, and feedback.",
+      "strengths": "Builds capacity, adaptability, and resilience over time.",
+      "blindspots": "Takes time and patience; less effective when fast results are critical.",
+      "advice": "Use coaching where growth matters most, and balance it with performance demands."
+    }
+  }
 }

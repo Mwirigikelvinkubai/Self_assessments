@@ -110,23 +110,22 @@ function Quiz({ file, onClose }) {
   const { questions, scoring, descriptions = {} } = data;
 
   const handleAnswer = (value) => {
-  let processedValue = value;
+    let processedValue = value;
 
-  // If sum_all scoring, ensure numeric values
-  if (scoring && scoring.method === "sum_all") {
-    processedValue = parseInt(value, 10);
-  }
+    // If sum_all scoring, ensure numeric values
+    if (scoring && scoring.method === "sum_all") {
+      processedValue = parseInt(value, 10);
+    }
 
-  const updated = [...answers, processedValue];
-  setAnswers(updated);
+    const updated = [...answers, processedValue];
+    setAnswers(updated);
 
-  if (updated.length === questions.length) {
-    calculateResult(updated);
-  } else {
-    setStep((s) => s + 1);
-  }
-};
-
+    if (updated.length === questions.length) {
+      calculateResult(updated);
+    } else {
+      setStep((s) => s + 1);
+    }
+  };
 
   const calculateResult = (finalAnswers) => {
     let resultObj = null;
@@ -142,12 +141,23 @@ function Quiz({ file, onClose }) {
       };
       finalAnswers.forEach((ans) => {
         switch (ans) {
-          case "A": styles.Avoiding++; break;
-          case "B": styles.Compromising++; break;
-          case "C": styles.Competing++; break;
-          case "D": styles.Collaborating++; break;
-          case "E": styles.Accommodating++; break;
-          default: break;
+          case "A":
+            styles.Avoiding++;
+            break;
+          case "B":
+            styles.Compromising++;
+            break;
+          case "C":
+            styles.Competing++;
+            break;
+          case "D":
+            styles.Collaborating++;
+            break;
+          case "E":
+            styles.Accommodating++;
+            break;
+          default:
+            break;
         }
       });
       const total = finalAnswers.length;
@@ -180,6 +190,39 @@ function Quiz({ file, onClose }) {
       }
       resultObj = { type: label, score: total, ...(descriptions[label] || {}) };
     }
+    // percentile method
+    else if (scoring && scoring.method === "percentile") {
+      const categories = scoring.categories || {};
+      const totals = {};
+      let grandTotal = 0;
+
+      Object.entries(categories).forEach(([type, indices]) => {
+        if (Array.isArray(indices)) {
+          totals[type] = 0;
+          indices.forEach((qIndex) => {
+            const ans = finalAnswers[qIndex - 1];
+            if (typeof ans === "number") {
+              totals[type] += ans;
+              grandTotal += ans;
+            }
+          });
+        }
+      });
+
+      const breakdown = Object.entries(totals).map(([style, value]) => ({
+        name: style,
+        value,
+        percentage: grandTotal ? ((value / grandTotal) * 100).toFixed(1) : 0,
+      }));
+
+      const top = breakdown.sort((a, b) => b.value - a.value)[0];
+
+      resultObj = {
+        type: top.name,
+        breakdown,
+        ...(descriptions[top.name] || {}),
+      };
+    }
     // categories
     else {
       const categories = scoring.categories || {};
@@ -194,7 +237,8 @@ function Quiz({ file, onClose }) {
         }
       });
       const entries = Object.entries(totals);
-      const topType = entries.length ? entries.sort((a, b) => b[1] - a[1])[0][0] : "Unknown";
+      const topType =
+        entries.length ? entries.sort((a, b) => b[1] - a[1])[0][0] : "Unknown";
       resultObj = { type: topType, ...(descriptions[topType] || {}) };
     }
 
@@ -210,24 +254,62 @@ function Quiz({ file, onClose }) {
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h3>Result: {result.type}</h3>
           <div>
-            <button className="close-btn" onClick={onClose}>Close</button>
+            <button className="close-btn" onClick={onClose}>
+              Close
+            </button>
             <button
               className="retake-btn"
-              onClick={() => { setAnswers([]); setStep(0); setResult(null); }}
+              onClick={() => {
+                setAnswers([]);
+                setStep(0);
+                setResult(null);
+              }}
               style={{ marginLeft: "8px" }}
-            >Retake</button>
+            >
+              Retake
+            </button>
           </div>
         </div>
-        {result.score !== undefined && <p><strong>Score:</strong> {result.score}</p>}
-        {result.count !== undefined && <p><strong>Top Count:</strong> {result.count}</p>}
-        {result.characteristics && <p><strong>Characteristics:</strong> {result.characteristics}</p>}
-        {result.strengths && <p><strong>Strengths:</strong> {result.strengths}</p>}
-        {result.blindspots && <p><strong>Blindspots:</strong> {result.blindspots}</p>}
-        {result.advice && <p><strong>Advice:</strong> {result.advice}</p>}
+        {result.score !== undefined && (
+          <p>
+            <strong>Score:</strong> {result.score}
+          </p>
+        )}
+        {result.count !== undefined && (
+          <p>
+            <strong>Top Count:</strong> {result.count}
+          </p>
+        )}
+        {result.characteristics && (
+          <p>
+            <strong>Characteristics:</strong> {result.characteristics}
+          </p>
+        )}
+        {result.strengths && (
+          <p>
+            <strong>Strengths:</strong> {result.strengths}
+          </p>
+        )}
+        {result.blindspots && (
+          <p>
+            <strong>Blindspots:</strong> {result.blindspots}
+          </p>
+        )}
+        {result.advice && (
+          <p>
+            <strong>Advice:</strong> {result.advice}
+          </p>
+        )}
         {result.breakdown && (
           <PieChart width={320} height={280}>
-            <Pie data={result.breakdown} cx="50%" cy="50%" outerRadius={90} dataKey="value"
-              label={(entry) => `${entry.name} (${entry.percentage}%)`}>
+            <Pie
+              data={result.breakdown}
+              cx="50%"
+              cy="50%"
+              outerRadius={90}
+              dataKey="value"
+              label={(entry) => `${entry.name} (${entry.percentage}%)`}
+            >
               {result.breakdown.map((entry, i) => (
                 <Cell key={i} fill={COLORS[i % COLORS.length]} />
               ))}
@@ -241,9 +323,13 @@ function Quiz({ file, onClose }) {
   }
 
   // Question screen
-  const progress = questions && questions.length ? Math.round(((step + 1) / questions.length) * 100) : 0;
+  const progress =
+    questions && questions.length
+      ? Math.round(((step + 1) / questions.length) * 100)
+      : 0;
   const currentQuestion = questions[step];
-  const qText = typeof currentQuestion === "string" ? currentQuestion : currentQuestion.question;
+  const qText =
+    typeof currentQuestion === "string" ? currentQuestion : currentQuestion.question;
 
   // Normalize options
   let options = [];
@@ -262,16 +348,25 @@ function Quiz({ file, onClose }) {
   return (
     <div className="quiz-container rotating-border-slow scale-in">
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <h3>Question {step + 1} of {questions.length}</h3>
-        <button className="close-btn" onClick={onClose}>Close</button>
+        <h3>
+          Question {step + 1} of {questions.length}
+        </h3>
+        <button className="close-btn" onClick={onClose}>
+          Close
+        </button>
       </div>
       <div className="progress-container">
-        <div className="progress-bar" style={{ width: `${progress}%`, transition: "width 0.4s" }} />
+        <div
+          className="progress-bar"
+          style={{ width: `${progress}%`, transition: "width 0.4s" }}
+        />
       </div>
       <p>{qText}</p>
       <div className="options">
         {options.map(([value, label]) => (
-          <button key={value} onClick={() => handleAnswer(value)}>{label}</button>
+          <button key={value} onClick={() => handleAnswer(value)}>
+            {label}
+          </button>
         ))}
       </div>
     </div>
