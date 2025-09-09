@@ -1,5 +1,103 @@
 {
-  "title": "Teamwork Strengths (Coming Soon)",
-  "description": "This assessment will help you discover how you contribute to group dynamics and teamwork effectiveness. Full quiz content will be available soon.",
-  "questions": []
+  "title": "Team Health Assessment",
+  "description": "Evaluate your team's overall health and alignment with MOHI values across trust, communication, adaptability, workload, and core values.",
+  "questions": [
+    { "question": "Team members trust one another to follow through on commitments." },
+    { "question": "Our team communicates openly and clearly." },
+    { "question": "Conflicts in the team are resolved constructively." },
+    { "question": "We have clarity on team roles and responsibilities." },
+    { "question": "The team has a shared sense of purpose." },
+    { "question": "Our team adapts well to unexpected changes or challenges." },
+    { "question": "Team morale is consistently positive." },
+    { "question": "Workload is balanced fairly among team members." },
+    { "question": "We celebrate wins and progress together." },
+    { "question": "Team members feel safe sharing ideas and concerns." },
+
+    { "question": "We hold one another accountable respectfully." },
+    { "question": "Meetings are productive and focused." },
+    { "question": "Our team is proactive in solving problems." },
+    { "question": "We collaborate effectively across different functions or departments." },
+    { "question": "Team members are resilient when facing challenges." },
+
+    { "question": "Servanthood is evident in how team members support one another." },
+    { "question": "We uphold integrity in our actions and decisions." },
+    { "question": "Our work contributes to transformation in people and communities." },
+    { "question": "We practice bold dependence on God in decision-making." },
+    { "question": "We show humility in how we relate to each other." },
+
+    { "question": "Trust among team members is strong and consistent." },
+    { "question": "We listen actively to one another." },
+    { "question": "The team has clear goals and priorities." },
+    { "question": "There is a strong sense of accountability in our team." },
+    { "question": "Team members manage stress and workload effectively." },
+    { "question": "We encourage innovation and fresh ideas." },
+    { "question": "We demonstrate care for one another’s well-being." },
+    { "question": "Our decisions are guided by integrity, even when difficult." },
+    { "question": "We actively seek ways to serve beyond our own interests." },
+    { "question": "Faith and prayer are part of our team culture." }
+  ],
+  "scoring": {
+    "method": "categories",
+    "labels": ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"],
+    "values": [1, 2, 3, 4, 5],
+    "categories": {
+      "Trust": [1, 10, 21],
+      "Communication": [2, 11, 22],
+      "Conflict Management": [3, 12],
+      "Clarity & Purpose": [4, 5, 23],
+      "Adaptability": [6, 13, 24, 25],
+      "Morale & Well-being": [7, 9, 14, 26, 27],
+      "Workload Balance": [8, 25],
+      "Servanthood": [16, 29],
+      "Integrity": [17, 28],
+      "Transformation": [18],
+      "Bold Dependence on God": [19, 30]
+    }
+  },
+  "descriptions": {
+    "Trust": {
+      "characteristics": "High trust fosters collaboration and psychological safety.",
+      "advice": "Build trust through transparency, consistency, and follow-through."
+    },
+    "Communication": {
+      "characteristics": "Effective communication enables clarity and cohesion.",
+      "advice": "Encourage open dialogue and active listening."
+    },
+    "Conflict Management": {
+      "characteristics": "Constructive conflict resolution strengthens relationships.",
+      "advice": "Address conflicts quickly with respect and focus on solutions."
+    },
+    "Clarity & Purpose": {
+      "characteristics": "Clear goals and roles enhance focus and productivity.",
+      "advice": "Revisit vision and roles regularly to ensure alignment."
+    },
+    "Adaptability": {
+      "characteristics": "Adaptable teams remain resilient under change.",
+      "advice": "Foster flexibility, continuous learning, and openness to feedback."
+    },
+    "Morale & Well-being": {
+      "characteristics": "Positive morale supports motivation and retention.",
+      "advice": "Celebrate wins, show appreciation, and balance workload."
+    },
+    "Workload Balance": {
+      "characteristics": "Fair distribution prevents burnout and resentment.",
+      "advice": "Monitor workload regularly and adjust responsibilities fairly."
+    },
+    "Servanthood": {
+      "characteristics": "Teams thrive when members serve one another selflessly.",
+      "advice": "Encourage acts of service and support beyond personal tasks."
+    },
+    "Integrity": {
+      "characteristics": "Integrity ensures trustworthiness and credibility.",
+      "advice": "Commit to honesty, fairness, and ethical decision-making."
+    },
+    "Transformation": {
+      "characteristics": "Transformative teams impact individuals and communities.",
+      "advice": "Focus on long-term change, not just short-term tasks."
+    },
+    "Bold Dependence on God": {
+      "characteristics": "Faith-centered teams draw strength from God in challenges.",
+      "advice": "Integrate prayer, devotion, and reliance on God into team practices."
+    }
+  }
 }
