@@ -1,5 +1,186 @@
 {
-  "title": "Conflict Management (Coming Soon)",
-  "description": "This assessment will provide insights into how you approach and handle conflict in different situations. Full quiz content will be available soon.",
-  "questions": []
+  "title": "Conflict Management",
+  "description": "Discover your preferred style of handling conflict based on your instincts and reactions.",
+  "scoring": {
+    "method": "conflict_styles"
+  },
+  "questions": [
+    {
+      "question": "When a disagreement arises at work, your first instinct is to…",
+      "options": {
+        "A": "Try to avoid the conflict and let it pass.",
+        "B": "Seek a middle ground so everyone gives up something.",
+        "C": "Assert your opinion strongly and push for your way.",
+        "D": "Listen to all sides and work toward a win-win solution.",
+        "E": "Give in to maintain peace, even if it costs you."
+      },
+      "styles": {
+        "A": "Avoiding",
+        "B": "Compromising",
+        "C": "Competing",
+        "D": "Collaborating",
+        "E": "Accommodating"
+      }
+    },
+    {
+      "question": "A team member disagrees with your idea during a meeting. What do you do?",
+      "options": {
+        "A": "Stay quiet and avoid further discussion.",
+        "B": "Ask them to explain and look for areas of agreement.",
+        "C": "Defend your idea firmly to show confidence.",
+        "D": "Suggest combining both ideas into a workable compromise.",
+        "E": "Accept their idea to keep harmony in the team."
+      },
+      "styles": {
+        "A": "Avoiding",
+        "B": "Collaborating",
+        "C": "Competing",
+        "D": "Compromising",
+        "E": "Accommodating"
+      }
+    },
+    {
+      "question": "Two colleagues are in conflict, and they approach you for help. How do you respond?",
+      "options": {
+        "A": "Step back and avoid involvement.",
+        "B": "Encourage them to each give up a little to reach an agreement.",
+        "C": "Support the colleague whose view you believe is stronger.",
+        "D": "Facilitate a discussion to find a solution that satisfies both.",
+        "E": "Urge one side to concede so things can move on quickly."
+      },
+      "styles": {
+        "A": "Avoiding",
+        "B": "Compromising",
+        "C": "Competing",
+        "D": "Collaborating",
+        "E": "Accommodating"
+      }
+    },
+    {
+      "question": "When deadlines are tight and conflict arises, you are most likely to…",
+      "options": {
+        "A": "Ignore the conflict and focus only on the deadline.",
+        "B": "Split the difference quickly to save time.",
+        "C": "Push for your approach because speed matters.",
+        "D": "Take time to involve everyone in finding the best solution.",
+        "E": "Yield to others to avoid slowing things down."
+      },
+      "styles": {
+        "A": "Avoiding",
+        "B": "Compromising",
+        "C": "Competing",
+        "D": "Collaborating",
+        "E": "Accommodating"
+      }
+    },
+    {
+      "question": "If someone criticizes your work unfairly, your reaction is…",
+      "options": {
+        "A": "Keep quiet and hope it goes away.",
+        "B": "Try to calmly clarify misunderstandings and seek common ground.",
+        "C": "Defend yourself strongly and challenge the criticism.",
+        "D": "Invite a constructive discussion to resolve the issue.",
+        "E": "Accept the criticism, even if it’s unfair, to avoid conflict."
+      },
+      "styles": {
+        "A": "Avoiding",
+        "B": "Compromising",
+        "C": "Competing",
+        "D": "Collaborating",
+        "E": "Accommodating"
+      }
+    },
+    {
+      "question": "In a conflict, what matters most to you?",
+      "options": {
+        "A": "Avoiding tension.",
+        "B": "Finding a fair middle ground.",
+        "C": "Standing firm on your position.",
+        "D": "Creating a solution that benefits everyone.",
+        "E": "Maintaining peace in the relationship."
+      },
+      "styles": {
+        "A": "Avoiding",
+        "B": "Compromising",
+        "C": "Competing",
+        "D": "Collaborating",
+        "E": "Accommodating"
+      }
+    },
+    {
+      "question": "When conflict arises in a group project, you tend to…",
+      "options": {
+        "A": "Stay out of it and focus only on your part.",
+        "B": "Suggest splitting tasks in a way that balances everyone’s concerns.",
+        "C": "Push your idea until others agree.",
+        "D": "Act as a mediator to find a solution that satisfies all.",
+        "E": "Let others decide and just go along."
+      },
+      "styles": {
+        "A": "Avoiding",
+        "B": "Compromising",
+        "C": "Competing",
+        "D": "Collaborating",
+        "E": "Accommodating"
+      }
+    },
+    {
+      "question": "You discover a mistake caused by a colleague. How do you handle it?",
+      "options": {
+        "A": "Ignore it—it’s not worth a fight.",
+        "B": "Suggest a quick correction that shares responsibility.",
+        "C": "Point it out firmly and insist they fix it.",
+        "D": "Discuss it openly and find a solution together.",
+        "E": "Fix it yourself to avoid confrontation."
+      },
+      "styles": {
+        "A": "Avoiding",
+        "B": "Compromising",
+        "C": "Competing",
+        "D": "Collaborating",
+        "E": "Accommodating"
+      }
+    },
+    {
+      "question": "When you strongly disagree with your manager’s decision, you…",
+      "options": {
+        "A": "Stay quiet and follow instructions.",
+        "B": "Propose an alternative that balances your view and theirs.",
+        "C": "Voice your disagreement directly and argue your case.",
+        "D": "Share your concerns respectfully and suggest a collaborative solution.",
+        "E": "Accept their decision without debate."
+      },
+      "styles": {
+        "A": "Avoiding",
+        "B": "Compromising",
+        "C": "Competing",
+        "D": "Collaborating",
+        "E": "Accommodating"
+      }
+    },
+    {
+      "question": "Your general approach to conflict is best described as…",
+      "options": {
+        "A": "Avoid it at all costs.",
+        "B": "Compromise to keep things moving.",
+        "C": "Confront and stand your ground.",
+        "D": "Collaborate to find the best outcome for all.",
+        "E": "Accommodate others to maintain harmony."
+      },
+      "styles": {
+        "A": "Avoiding",
+        "B": "Compromising",
+        "C": "Competing",
+        "D": "Collaborating",
+        "E": "Accommodating"
+      }
+    }
+  ],
+  "results": {
+    "Avoiding": "You prefer to step back from conflict. While this helps reduce stress, important issues may go unresolved.",
+    "Compromising": "You look for middle ground. This is practical but may sometimes leave both sides partially dissatisfied.",
+    "Competing": "You push strongly for your viewpoint. This shows confidence but may create tension if overused.",
+    "Collaborating": "You value solutions that benefit everyone. This builds strong relationships but can take more time.",
+    "Accommodating": "You prioritize harmony over winning. This preserves peace but may lead to your own needs being overlooked."
+  }
 }

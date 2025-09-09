@@ -9,17 +9,23 @@ function Tabs() {
     { key: "ptsd", title: "PTSD Assessment", file: "ptsd.json" },
     { key: "depression", title: "Depression Assessment", file: "depression.json" },
     { key: "burnout", title: "Burnout Assessment", file: "burnout.json" },
+    {key:"conflict",title: "Conflict Management", file: "conflict.json"},
   ];
 
   if (activeTab) {
-    const quiz = quizzes.find((q) => q.key === activeTab);
-    return (
-      <div>
-        <button onClick={() => setActiveTab(null)}>← Back</button>
-        <Quiz file={quiz.file} title={quiz.title} />
-      </div>
-    );
-  }
+  const quiz = quizzes.find((q) => q.key === activeTab);
+  return (
+    <div>
+      <button onClick={() => setActiveTab(null)}>← Back</button>
+      <Quiz
+        file={quiz.file}
+        title={quiz.title}
+        onClose={() => setActiveTab(null)} // ✅ added
+      />
+    </div>
+  );
+}
+
 
   return (
     <div className="tabs">
