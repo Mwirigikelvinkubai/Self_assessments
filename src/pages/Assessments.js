@@ -21,7 +21,7 @@ function Assessments() {
     { file: "gifts.json", title: "Spiritual Gifts", description: "Coming soon – Identify your spiritual gifts and how to use them." },
     { file: "teamwork.json", title: "Teamwork Health", description: "Coming soon – Assess the strength and health of your teamwork." },
     { file: "ei.json", title: "Emotional Intelligence", description: "Coming soon – Measure your ability to recognize and manage emotions." },
-    { file: "resilience.json", title: "Resilience Test", description: "Coming soon – Evaluate your resilience and adaptability in challenges." },
+    { file: "resilience.json", title: "Resilience Test", description: "Evaluate your resilience and adaptability in challenges." },
     { file: "typing", title: "Typing Test", description: "Test your typing speed and accuracy with live feedback." },
   ];
 

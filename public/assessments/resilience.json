@@ -1,5 +1,102 @@
 {
-  "title": "Resilience Check (Coming Soon)",
-  "description": "This assessment will help you reflect on your ability to cope with stress, adapt to change, and recover from setbacks. Full quiz content will be available soon.",
-  "questions": []
+  "title": "Resilience Test",
+  "description": "Evaluate your resilience and adaptability in challenging situations.",
+  "questions": [
+    {
+      "question": "When faced with a major setback, how do you usually respond?",
+      "options": [
+        "I struggle to recover and often feel stuck",
+        "It takes me a while, but I eventually move on",
+        "I focus on solutions and bounce back fairly quickly",
+        "I adapt immediately and keep moving forward"
+      ]
+    },
+    {
+      "question": "How do you handle unexpected changes in plans?",
+      "options": [
+        "I feel stressed and resistant to change",
+        "I adjust, but it takes effort",
+        "I accept change and try to adapt",
+        "I embrace change and see it as an opportunity"
+      ]
+    },
+    {
+      "question": "When you experience failure, how do you interpret it?",
+      "options": [
+        "As proof that I am not good enough",
+        "As a setback that discourages me",
+        "As a lesson to learn and improve",
+        "As feedback and motivation to try again"
+      ]
+    },
+    {
+      "question": "In high-stress situations, how do you typically cope?",
+      "options": [
+        "I feel overwhelmed and shut down",
+        "I push through but feel drained",
+        "I manage stress with coping strategies",
+        "I stay calm and focused under pressure"
+      ]
+    },
+    {
+      "question": "How often do you seek support when facing challenges?",
+      "options": [
+        "Rarely, I tend to isolate myself",
+        "Sometimes, but I hesitate to ask for help",
+        "Often, I lean on close friends or colleagues",
+        "Regularly, I actively build a support network"
+      ]
+    },
+    {
+      "question": "How do you view challenges in life?",
+      "options": [
+        "As threats that make life harder",
+        "As obstacles that are frustrating",
+        "As opportunities for growth",
+        "As necessary steps toward success"
+      ]
+    },
+    {
+      "question": "When under pressure, how do you make decisions?",
+      "options": [
+        "I freeze and avoid making choices",
+        "I make impulsive or emotional decisions",
+        "I take time to think and choose carefully",
+        "I remain calm, assess options, and act decisively"
+      ]
+    },
+    {
+      "question": "How do you maintain motivation during long-term challenges?",
+      "options": [
+        "I lose motivation quickly",
+        "I struggle but push myself occasionally",
+        "I remind myself of goals and keep going",
+        "I stay focused and motivated throughout"
+      ]
+    }
+  ],
+  "scoring": {
+    "method": "sum_all",
+    "values": [1, 2, 3, 4],
+    "labels": ["Rarely", "Sometimes", "Often", "Almost Always"],
+    "thresholds": {
+      "Low Resilience": { "min": 8, "max": 16 },
+      "Moderate Resilience": { "min": 17, "max": 24 },
+      "High Resilience": { "min": 25, "max": 32 }
+    }
+  },
+  "descriptions": {
+    "Low Resilience": {
+      "characteristics": "You may find it difficult to adapt to change or recover from setbacks.",
+      "advice": "Start small—develop healthy coping strategies, seek support, and build confidence step by step."
+    },
+    "Moderate Resilience": {
+      "characteristics": "You are able to adapt in some situations but still experience struggles in tougher challenges.",
+      "advice": "Strengthen your resilience by practicing stress management, reframing setbacks, and leaning on your support systems."
+    },
+    "High Resilience": {
+      "characteristics": "You recover quickly from setbacks and adapt effectively to change.",
+      "advice": "Keep nurturing this strength—continue practicing positive coping strategies and help others build resilience too."
+    }
+  }
 }

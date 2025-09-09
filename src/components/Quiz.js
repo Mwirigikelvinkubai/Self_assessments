@@ -110,15 +110,23 @@ function Quiz({ file, onClose }) {
   const { questions, scoring, descriptions = {} } = data;
 
   const handleAnswer = (value) => {
-    const updated = [...answers, value];
-    setAnswers(updated);
+  let processedValue = value;
 
-    if (updated.length === questions.length) {
-      calculateResult(updated);
-    } else {
-      setStep((s) => s + 1);
-    }
-  };
+  // If sum_all scoring, ensure numeric values
+  if (scoring && scoring.method === "sum_all") {
+    processedValue = parseInt(value, 10);
+  }
+
+  const updated = [...answers, processedValue];
+  setAnswers(updated);
+
+  if (updated.length === questions.length) {
+    calculateResult(updated);
+  } else {
+    setStep((s) => s + 1);
+  }
+};
+
 
   const calculateResult = (finalAnswers) => {
     let resultObj = null;
