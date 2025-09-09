@@ -1,6 +1,6 @@
 // src/components/Quiz.js
 import React, { useEffect, useState } from "react";
-import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import { PieChart, Pie, Cell, Tooltip, Legend, RadialBarChart, RadialBar } from "recharts";
 
 function Quiz({ file, onClose }) {
   const [data, setData] = useState(null);
@@ -112,7 +112,6 @@ function Quiz({ file, onClose }) {
   const handleAnswer = (value) => {
     let processedValue = value;
 
-    // If sum_all scoring, ensure numeric values
     if (scoring && scoring.method === "sum_all") {
       processedValue = parseInt(value, 10);
     }
@@ -130,7 +129,6 @@ function Quiz({ file, onClose }) {
   const calculateResult = (finalAnswers) => {
     let resultObj = null;
 
-    // conflict styles
     if (scoring && scoring.method === "conflict_styles") {
       const styles = {
         Avoiding: 0,
@@ -173,9 +171,7 @@ function Quiz({ file, onClose }) {
         breakdown: entries,
         ...(descriptions[top.name] || {}),
       };
-    }
-    // sum method
-    else if (scoring && scoring.method === "sum_all") {
+    } else if (scoring && scoring.method === "sum_all") {
       const total = finalAnswers.reduce((a, b) => a + b, 0);
       let label = "Unknown";
       if (scoring.thresholds) {
@@ -189,9 +185,7 @@ function Quiz({ file, onClose }) {
         }
       }
       resultObj = { type: label, score: total, ...(descriptions[label] || {}) };
-    }
-    // percentile method
-    else if (scoring && scoring.method === "percentile") {
+    } else if (scoring && scoring.method === "percentile") {
       const categories = scoring.categories || {};
       const totals = {};
       let grandTotal = 0;
@@ -222,9 +216,7 @@ function Quiz({ file, onClose }) {
         breakdown,
         ...(descriptions[top.name] || {}),
       };
-    }
-    // categories
-    else {
+    } else {
       const categories = scoring.categories || {};
       const totals = {};
       Object.keys(categories).forEach((t) => (totals[t] = 0));
@@ -249,6 +241,13 @@ function Quiz({ file, onClose }) {
   // Results screen
   if (result) {
     const COLORS = ["#FF6B6B", "#FFB86B", "#4AD99B", "#4D8BFF", "#8A6CFF"];
+
+    // health meter data
+    const healthScore = result.score
+      ? Math.min(100, Math.round((result.score / (questions.length * 5)) * 100))
+      : null;
+    const healthData = healthScore !== null ? [{ name: "Health", value: healthScore }] : [];
+
     return (
       <div className="results rotating-border-slow scale-in">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -318,6 +317,40 @@ function Quiz({ file, onClose }) {
             <Legend />
           </PieChart>
         )}
+
+        {/* Health meter */}
+        {healthScore !== null && (
+          <div style={{ marginTop: "20px" }}>
+            <h4> Health Meter</h4>
+            <RadialBarChart
+              width={300}
+              height={250}
+              innerRadius="80%"
+              outerRadius="100%"
+              data={healthData}
+              startAngle={180}
+              endAngle={0}
+            >
+              <RadialBar
+                minAngle={15}
+                clockWise
+                dataKey="value"
+                cornerRadius={10}
+                fill="#4AD99B"
+              />
+              <text
+                x={150}
+                y={140}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fontSize="20"
+                fontWeight="bold"
+              >
+                {healthScore}%
+              </text>
+            </RadialBarChart>
+          </div>
+        )}
       </div>
     );
   }
@@ -331,13 +364,12 @@ function Quiz({ file, onClose }) {
   const qText =
     typeof currentQuestion === "string" ? currentQuestion : currentQuestion.question;
 
-  // Normalize options
   let options = [];
   if (currentQuestion.options) {
     if (Array.isArray(currentQuestion.options)) {
       options = currentQuestion.options.map((opt, i) => [i.toString(), opt]);
     } else if (typeof currentQuestion.options === "object") {
-      options = Object.entries(currentQuestion.options); // [["A", "text"], ["B", "text"]...]
+      options = Object.entries(currentQuestion.options);
     }
   } else if (scoring.labels && scoring.values) {
     options = scoring.labels.map((label, i) => [scoring.values[i], label]);

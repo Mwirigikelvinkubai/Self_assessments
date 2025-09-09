@@ -1,5 +1,147 @@
 {
-  "title": "Spiritual Gifts (Coming Soon)",
-  "description": "This assessment will help you identify your spiritual gifts and how you can use them to serve others effectively. Full quiz content will be available soon.",
-  "questions": []
+  "title": "Spiritual Gifts Assessment",
+  "description": "Discover the areas where God has uniquely gifted you to serve others and the body of Christ. This 50-item tool helps you reflect on your strengths across various spiritual gifts.",
+  "questions": [
+    { "question": "I enjoy helping others with practical tasks, even when it goes unnoticed." },
+    { "question": "I am fulfilled when I contribute in the background to make things run smoothly." },
+    { "question": "I notice opportunities to serve that others often overlook." },
+    { "question": "I gladly take on responsibilities that free others to lead or teach." },
+    { "question": "I often encourage others when they feel down or discouraged." },
+    { "question": "I enjoy speaking hope and motivating others to trust God more." },
+    { "question": "I am quick to remind others of God’s promises during difficulties." },
+    { "question": "I naturally notice people who need encouragement or affirmation." },
+    { "question": "I often take initiative to guide and organize people toward a goal." },
+    { "question": "I feel confident making decisions that affect a group." },
+    { "question": "I can motivate others to move toward a shared vision." },
+    { "question": "I enjoy setting goals and helping others achieve them." },
+    { "question": "I am generous with my resources and find joy in giving." },
+    { "question": "I give cheerfully, even when it requires personal sacrifice." },
+    { "question": "I often look for opportunities to support ministries or individuals financially." },
+    { "question": "I prefer contributing resources quietly rather than seeking recognition." },
+    { "question": "I trust God to provide, even when situations seem impossible." },
+    { "question": "I remain hopeful and confident in God when others doubt." },
+    { "question": "I often inspire others to rely on God in tough circumstances." },
+    { "question": "I feel a deep assurance that God will act when I pray in faith." },
+    { "question": "I enjoy teaching and explaining spiritual truths clearly." },
+    { "question": "I find it natural to prepare lessons that help others understand Scripture." },
+    { "question": "I enjoy answering people’s questions about faith and the Bible." },
+    { "question": "I prefer accuracy and clarity when handling God’s Word." },
+    { "question": "I can sense when something is not aligned with God’s Spirit or truth." },
+    { "question": "I recognize when teachings are biblically unsound or misleading." },
+    { "question": "I sense hidden motives or spiritual influences in situations." },
+    { "question": "I often discern whether someone’s actions come from God or human will." },
+    { "question": "I feel compassion and empathy for those who are suffering." },
+    { "question": "I am drawn to comfort those who are grieving or hurting." },
+    { "question": "I feel a strong urge to help when I see others in distress." },
+    { "question": "I often put myself in someone else’s shoes to understand their pain." },
+    { "question": "I am bold in sharing my faith and inviting others to follow Jesus." },
+    { "question": "I look for opportunities to talk about God with those who don’t believe." },
+    { "question": "I am energized when I see someone respond to the gospel." },
+    { "question": "I feel burdened when people around me don’t know Christ." },
+    { "question": "I enjoy praying for others and often see God answer in powerful ways." },
+    { "question": "I feel led to pray consistently for specific people or needs." },
+    { "question": "I naturally pray for extended periods without losing focus." },
+    { "question": "Others often ask me to pray for them because they trust my prayers." },
+    { "question": "I can see how biblical truths apply to real-life situations." },
+    { "question": "I often give advice that others find wise and practical." },
+    { "question": "I can explain how Scripture applies in complex situations." },
+    { "question": "I tend to weigh options and choose paths that align with God’s wisdom." },
+    { "question": "I can speak God’s truth with boldness, even when it’s uncomfortable." },
+    { "question": "I often sense God leading me to deliver timely encouragement or correction." },
+    { "question": "I sometimes share messages that feel inspired for a specific situation." },
+    { "question": "I am willing to say hard truths if I believe God wants me to." }
+  ],
+  "scoring": {
+    "method": "percentile",
+    "labels": ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"],
+    "values": [1, 2, 3, 4, 5],
+    "categories": {
+      "Service": [1, 2, 3, 4],
+      "Encouragement": [5, 6, 7, 8],
+      "Leadership": [9, 10, 11, 12],
+      "Giving": [13, 14, 15, 16],
+      "Faith": [17, 18, 19, 20],
+      "Teaching": [21, 22, 23, 24],
+      "Discernment": [25, 26, 27, 28],
+      "Mercy": [29, 30, 31, 32],
+      "Evangelism": [33, 34, 35, 36],
+      "Intercession": [37, 38, 39, 40],
+      "Wisdom": [41, 42, 43, 44],
+      "Prophecy": [45, 46, 47, 48]
+    }
+  },
+  "descriptions": {
+    "Service": {
+      "characteristics": "Meeting practical needs and supporting others behind the scenes.",
+      "strengths": "Dependable, servant-hearted, supportive.",
+      "blindspots": "May undervalue their contribution or avoid leadership.",
+      "advice": "Your service is vital — keep serving joyfully."
+    },
+    "Encouragement": {
+      "characteristics": "Building up others with words of hope and comfort.",
+      "strengths": "Positive influence, motivational, caring.",
+      "blindspots": "May avoid speaking hard truths.",
+      "advice": "Encourage with both love and truth."
+    },
+    "Leadership": {
+      "characteristics": "Guiding and organizing others toward vision and mission.",
+      "strengths": "Organized, motivating, strategic.",
+      "blindspots": "May risk control or pride.",
+      "advice": "Lead with humility, pointing people to Christ."
+    },
+    "Giving": {
+      "characteristics": "Generosity with time, money, and resources.",
+      "strengths": "Selfless, supportive, kingdom-minded.",
+      "blindspots": "May feel unappreciated if unnoticed.",
+      "advice": "Continue to give cheerfully as God leads."
+    },
+    "Faith": {
+      "characteristics": "Deep trust in God that inspires others.",
+      "strengths": "Prayerful, bold, confident.",
+      "blindspots": "Can be impatient with doubters.",
+      "advice": "Help others grow in faith patiently."
+    },
+    "Teaching": {
+      "characteristics": "Explaining and clarifying spiritual truths.",
+      "strengths": "Clear communicator, grounded in truth.",
+      "blindspots": "May overemphasize knowledge over application.",
+      "advice": "Connect truth with love and daily life."
+    },
+    "Discernment": {
+      "characteristics": "Recognizing truth from error and spiritual authenticity.",
+      "strengths": "Spirit-sensitive, protective, wise.",
+      "blindspots": "May appear critical or judgmental.",
+      "advice": "Use discernment with humility and love."
+    },
+    "Mercy": {
+      "characteristics": "Compassion for the hurting and suffering.",
+      "strengths": "Empathetic, relational, caring.",
+      "blindspots": "Risk of burnout or overidentifying with pain.",
+      "advice": "Balance care for others with self-care."
+    },
+    "Evangelism": {
+      "characteristics": "Sharing the gospel and inviting people to Christ.",
+      "strengths": "Bold, relational, passionate.",
+      "blindspots": "May focus on conversion over discipleship.",
+      "advice": "Walk with new believers beyond the first step."
+    },
+    "Intercession": {
+      "characteristics": "Strong calling to pray for others.",
+      "strengths": "Faithful, Spirit-led, consistent.",
+      "blindspots": "Can feel unseen or spiritually drained.",
+      "advice": "Stay refreshed in God’s Word while interceding."
+    },
+    "Wisdom": {
+      "characteristics": "Applying biblical truth to real-life decisions.",
+      "strengths": "Insightful, practical, balanced.",
+      "blindspots": "May lean too much on personal logic.",
+      "advice": "Stay grounded in Scripture as the foundation."
+    },
+    "Prophecy": {
+      "characteristics": "Boldly speaking God’s truth to encourage or correct.",
+      "strengths": "Bold, Spirit-led, direct.",
+      "blindspots": "Can be blunt or misunderstood.",
+      "advice": "Always speak the truth in love."
+    }
+  }
 }
