@@ -1,76 +1,184 @@
-# Getting Started with Create React App
+# 🌟 MOHI Self-Assessment Hub
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A web-based platform by **Missions of Hope International (MOHI)** for interactive self-assessments, skill growth, and personal development.  
+The first release focuses on **typing speed assessments** with real-time feedback and score tracking, with more assessments and features planned.  
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Features (Current & Upcoming)
 
-### `npm start`
+### ✅ Current
+- Secure **user authentication** (signup, login, logout).
+- **Protected routes** (only accessible after login).
+- Typing **assessment tool** with speed (WPM), accuracy, and errors.
+- Local storage of session state.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 🔜 Upcoming (Roadmap)
+- Save & view **assessment history**.
+- Personalized **user dashboard** with progress charts.
+- **Leaderboards & achievements** for motivation.
+- Multi-assessment expansion (reading comprehension, logic, soft skills).
+- Admin dashboard for **teachers/trainers**.
+- **Google signup** & Single Sign-On.
+- PDF **certificates of achievement**.
+- MOHI-branded UI improvements and mobile-friendly design.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🛠️ Tech Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Frontend**
+- React (CRA / Vite)
+- React Router
+- Context API for Auth
+- CSS (custom MOHI theme)
 
-### `npm run build`
+**Backend**
+- Node.js / Express
+- MongoDB (Mongoose ODM)
+- JWT Authentication
+- REST APIs
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 📂 Project Structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+self-assessments/
+├── backend/ # Express server & API
+│ ├── models/ # MongoDB models
+│ ├── routes/ # API endpoints
+│ └── server.js # App entry point
+│
+├── frontend/ # React client app
+│ ├── src/
+│ │ ├── pages/ # Login, Signup, Assessments, Home
+│ │ ├── components/ # Reusable UI
+│ │ ├── App.js # Routes & layout
+│ │ └── index.js # Entry point
+│ └── public/
+│
+└── README.md
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## ⚡ Getting Started
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 1️⃣ Clone the repo
+```bash
+## git clone https://github.com/<your-username>/self-assessments.git
+cd self-assessments
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Backend Setup
 
-## Learn More
+cd backend
+npm install
+npm run dev   
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Ensure you have MongoDB running locally or connect via Atlas.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Configure your .env file:
 
-### Code Splitting
+MONGO_URI=<your-mongodb-uri>
+JWT_SECRET=<your-secret>
+PORT=5000
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Frontend Setup
 
-### Analyzing the Bundle Size
+cd frontend
+npm install
+npm start   # runs React app on http://localhost:3000
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+🎯 Usage
 
-### Making a Progressive Web App
+Sign up / login to your account.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Take a typing assessment and view your score.
 
-### Advanced Configuration
+Future releases: track your progress, compare with others, and unlock achievements!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Phase 1: Core Foundation (MVP)
 
-### Deployment
+🔹 Goal: Make the app useful right away (typing assessments + saved results).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+✅ Backend setup (authentication, user accounts).
 
-### `npm run build` fails to minify
+✅ Frontend routes (login, signup, assessments).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+🔜 Store typing results in DB (WPM, accuracy, errors, time).
 
-//add a search bar
+🔜 Show results history (list of past attempts).
 
-//segregate into levels
+🔜 Logout + secure routes (done already).
 
-//have  the question as a pop out
+Phase 2: Personalization & Dashboard
+
+🔹 Goal: Give users a reason to return.
+
+🔜 User profile (name, email, photo, optional bio).
+
+🔜 Dashboard showing:
+
+Best score, average score.
+
+Graph of progress over time.
+
+Recent attempts list.
+
+🔜 Clear feedback after each test (e.g., “You improved by 7 WPM from last week 🎉”).
+
+Phase 3: Gamification & Motivation
+
+🔹 Goal: Make assessments engaging.
+
+🔜 Leaderboards (daily, weekly, all-time).
+
+🔜 Achievements/badges (🏅 First Test, 🚀 50 WPM, 🎯 100% Accuracy).
+
+🔜 Streak tracking (keep users coming back daily).
+
+Phase 4: Multi-Assessment Expansion
+
+🔹 Goal: Broaden beyond typing.
+
+🔜 Reading comprehension tests.
+
+🔜 Math/logic assessments.
+
+🔜 Soft skills (communication, problem-solving).
+
+🔜 Support for uploading / creating assessments in backend.
+
+Phase 5: Admin & Teacher Features
+
+🔹 Goal: Make it useful for schools/organizations.
+
+🔜 Admin dashboard:
+
+View/manage users.
+
+Reset passwords.
+
+Export reports (CSV, PDF).
+
+🔜 Teacher accounts:
+
+View group-level performance.
+
+Assign specific assessments.
+
+Track progress of a class/team.
+
+Phase 6: Advanced Features
+
+🔹 Goal: Long-term growth & polish.
+
+🔜 Google signup / Single Sign-On (SSO).
+
+🔜 Email notifications (“Weekly Progress Report”).
+
+🔜 Certificates (auto-generate PDFs for milestones).
+
+🔜 Mobile-friendly UI / PWA (usable offline).
+
+🔜 AI feedback (e.g., detect which keys slow you down and suggest practice). ##
