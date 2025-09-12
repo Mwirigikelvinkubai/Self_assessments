@@ -1,51 +1,26 @@
+// src/pages/Signup.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Signup() {
-  const [name, setName] = useState("");      // NEW
+function Signup({ setIsLoggedIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
 
-    try {
-      const response = await fetch("http://localhost:5000/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }), // include name
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Signup failed");
-      }
-
-      // ✅ Save token + logged in status
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("isLoggedIn", "true");
-
-      navigate("/"); // redirect to home
-    } catch (err) {
-      setError(err.message);
-    }
+    // Example signup logic (replace with API later)
+    localStorage.setItem("token", "dummy-token"); 
+    localStorage.setItem("isLoggedIn", "true");
+    setIsLoggedIn(true);  // 👈 updates state instantly
+    navigate("/");
   };
 
   return (
-    <div className="auth-container">
+    <div>
       <h2>Signup</h2>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Full Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
         <input
           type="email"
           placeholder="Email"
@@ -62,7 +37,6 @@ function Signup() {
         />
         <button type="submit">Signup</button>
       </form>
-      {error && <p className="error">{error}</p>}
     </div>
   );
 }

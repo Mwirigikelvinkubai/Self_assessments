@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
-const router = express.Router();  // ✅ this was missing
+const router = express.Router(); 
 
 // Signup
 router.post("/signup", async (req, res) => {
@@ -59,4 +59,4 @@ router.post("/login", async (req, res) => {
   }
 });
 
-export default router;   // ✅ don’t forget this
+export default router;  

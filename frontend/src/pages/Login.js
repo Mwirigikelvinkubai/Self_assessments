@@ -1,41 +1,28 @@
+// src/pages/Login.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Login({ setIsLoggedIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
 
-    try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Login failed");
-      }
-
-      // ✅ Save token + logged in status
-      localStorage.setItem("token", data.token);
+    // Example login logic (replace with API call later)
+    if (email === "test@test.com" && password === "1234") {
+      localStorage.setItem("token", "dummy-token"); 
       localStorage.setItem("isLoggedIn", "true");
-
-      navigate("/"); // redirect to home
-    } catch (err) {
-      setError(err.message);
+      setIsLoggedIn(true);  // 👈 updates state instantly
+      navigate("/");
+    } else {
+      alert("Invalid email or password");
     }
   };
 
   return (
-    <div className="auth-container">
+    <div>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -54,7 +41,6 @@ function Login() {
         />
         <button type="submit">Login</button>
       </form>
-      {error && <p className="error">{error}</p>}
     </div>
   );
 }
