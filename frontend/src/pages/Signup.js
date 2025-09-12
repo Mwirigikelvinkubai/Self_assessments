@@ -1,8 +1,8 @@
-// src/pages/Signup.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Signup() {
+  const [name, setName] = useState("");      // NEW
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -10,33 +10,42 @@ function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/signup", {
+      const response = await fetch("http://localhost:5000/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ name, email, password }), // include name
       });
 
-      const data = await res.json();
+      const data = await response.json();
 
-      if (!res.ok) {
-        setError(data.message || "Signup failed");
-        return;
+      if (!response.ok) {
+        throw new Error(data.message || "Signup failed");
       }
 
-      alert("Signup successful! Please login.");
-      navigate("/login");
+      // ✅ Save token + logged in status
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("isLoggedIn", "true");
+
+      navigate("/"); // redirect to home
     } catch (err) {
-      setError("Server error, try again later.");
+      setError(err.message);
     }
   };
 
   return (
     <div className="auth-container">
       <h2>Signup</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
       <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Full Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
         <input
           type="email"
           placeholder="Email"
@@ -46,16 +55,14 @@ function Signup() {
         />
         <input
           type="password"
-          placeholder="Password (min 6 chars)"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
         <button type="submit">Signup</button>
       </form>
-      <p>
-        Already have an account? <a href="/login">Login</a>
-      </p>
+      {error && <p className="error">{error}</p>}
     </div>
   );
 }

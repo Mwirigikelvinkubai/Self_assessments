@@ -301,4 +301,20 @@ main {
   font-size: 0.95rem;
   color: #555;
 }
+/* Make login/signup centered */
+.main-content {
+  padding: 2rem;
+}
+.logout-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.logout-btn:hover {
+  background: #c0392b;
+}
+
 

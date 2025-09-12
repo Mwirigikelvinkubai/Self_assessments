@@ -1,4 +1,3 @@
-// src/pages/Login.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,35 +9,34 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/login", {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
+      const data = await response.json();
 
-      if (!res.ok) {
-        setError(data.message || "Login failed");
-        return;
+      if (!response.ok) {
+        throw new Error(data.message || "Login failed");
       }
 
-      // Save JWT token in localStorage
+      // ✅ Save token + logged in status
       localStorage.setItem("token", data.token);
       localStorage.setItem("isLoggedIn", "true");
 
-      navigate("/"); // redirect to homepage
+      navigate("/"); // redirect to home
     } catch (err) {
-      setError("Server error, try again later.");
+      setError(err.message);
     }
   };
 
   return (
     <div className="auth-container">
       <h2>Login</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <input
           type="email"
@@ -56,9 +54,7 @@ function Login() {
         />
         <button type="submit">Login</button>
       </form>
-      <p>
-        No account? <a href="/signup">Signup here</a>
-      </p>
+      {error && <p className="error">{error}</p>}
     </div>
   );
 }
