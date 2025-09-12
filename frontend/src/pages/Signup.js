@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Auth.css"; // ✅ Shared styles
+import { GoogleLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 
 function Signup({ setIsLoggedIn }) {
   const [name, setName] = useState("");
@@ -37,10 +39,32 @@ function Signup({ setIsLoggedIn }) {
     }
   };
 
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/google", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: credentialResponse.credential }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) throw new Error(data.message);
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("isLoggedIn", "true");
+
+      setIsLoggedIn(true);
+      navigate("/");
+    } catch (err) {
+      console.error("Google login failed", err);
+    }
+  };
+
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2 className="auth-title">Join MOHI Leadership and Development Assessmnet Hub</h2>
+        <h2 className="auth-title">Join MOHI Leadership and Development Assessment Hub 🌍</h2>
         <p className="auth-subtitle">Create your account to get started</p>
 
         {error && <div className="auth-error">{error}</div>}
@@ -71,6 +95,13 @@ function Signup({ setIsLoggedIn }) {
             Signup
           </button>
         </form>
+
+        <div className="divider">or</div>
+
+        <GoogleLogin
+          onSuccess={handleGoogleSuccess}
+          onError={() => console.log("Google Login Failed")}
+        />
 
         <p className="auth-footer">
           Already have an account?{" "}
